@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Status Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .status-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .status-card h3 {
+            margin-top: 0;
+            color: #fff;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-online { background: #4CAF50; }
+        .status-warning { background: #FF9800; }
+        .status-offline { background: #F44336; }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .metric-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 System Status Dashboard</h1>
+            <p>Monitor all applications and system resources</p>
+        </div>
+
+        <div class="metrics">
+            <div class="metric-card">
+                <div class="metric-number">3</div>
+                <div>Active Applications</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-number">99.9%</div>
+                <div>Uptime</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-number">1.2s</div>
+                <div>Average Response Time</div>
+            </div>
+        </div>
+
+        <h2>Application Status</h2>
+        <div class="status-grid">
+            <div class="status-card">
+                <h3>🛒 E-Commerce Platform</h3>
+                <p><span class="status-indicator status-online"></span>Online</p>
+                <p><strong>URL:</strong> /58755173867736756056205913150543761582392668183041</p>
+                <p><strong>Theme:</strong> Blue Gradient</p>
+                <p><strong>Memory Usage:</strong> 45.2 MB</p>
+                <button class="btn">View Details</button>
+            </div>
+            <div class="status-card">
+                <h3>👥 CRM System</h3>
+                <p><span class="status-indicator status-online"></span>Online</p>
+                <p><strong>URL:</strong> /93627230540327956377636052771248376717702081151780</p>
+                <p><strong>Theme:</strong> Green Gradient</p>
+                <p><strong>Memory Usage:</strong> 38.7 MB</p>
+                <button class="btn">View Details</button>
+            </div>
+            <div class="status-card">
+                <h3>📋 Project Management</h3>
+                <p><span class="status-indicator status-online"></span>Online</p>
+                <p><strong>URL:</strong> /64240802856317208501462664955902695841478822781343</p>
+                <p><strong>Theme:</strong> Purple Gradient</p>
+                <p><strong>Memory Usage:</strong> 42.1 MB</p>
+                <button class="btn">View Details</button>
+            </div>
+        </div>
+
+        <h2>System Resources</h2>
+        <div class="status-grid">
+            <div class="status-card">
+                <h3>💾 Memory Usage</h3>
+                <p><span class="status-indicator status-warning"></span>Moderate</p>
+                <p><strong>Used:</strong> 125.9 MB / 512 MB</p>
+                <p><strong>Available:</strong> 386.1 MB</p>
+            </div>
+            <div class="status-card">
+                <h3>🖥️ CPU Usage</h3>
+                <p><span class="status-indicator status-online"></span>Normal</p>
+                <p><strong>Current:</strong> 23.4%</p>
+                <p><strong>Peak:</strong> 67.8%</p>
+            </div>
+            <div class="status-card">
+                <h3>🌐 Network</h3>
+                <p><span class="status-indicator status-online"></span>Connected</p>
+                <p><strong>Port:</strong> 3001</p>
+                <p><strong>Requests/min:</strong> 156</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <p><strong>Multi-Tenant System Status Dashboard</strong></p>
+            <p><strong>Server:</strong> localhost:3001</p>
+            <p><strong>Last Updated:</strong> <span id="last-updated"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Update timestamp
+        function updateTimestamp() {
+            document.getElementById('last-updated').textContent = new Date().toLocaleString();
+        }
+        updateTimestamp();
+        setInterval(updateTimestamp, 1000);
+
+        // Status card interaction
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const appName = this.parentElement.querySelector('h3').textContent;
+                alert(`Viewing details for ${appName}`);
+            });
+        });
+
+        // Update metrics with random data
+        setInterval(() => {
+            const memoryUsage = document.querySelector('.status-card:nth-child(1) p:nth-child(3)');
+            const currentMemory = parseFloat(memoryUsage.textContent.match(/[\d.]+/)[0]);
+            const newMemory = Math.max(30, Math.min(200, currentMemory + Math.floor(Math.random() * 10) - 5));
+            memoryUsage.innerHTML = `<strong>Used:</strong> ${newMemory.toFixed(1)} MB / 512 MB`;
+            
+            const cpuUsage = document.querySelector('.status-card:nth-child(2) p:nth-child(2)');
+            const currentCPU = parseFloat(cpuUsage.textContent.match(/[\d.]+/)[0]);
+            const newCPU = Math.max(5, Math.min(90, currentCPU + Math.floor(Math.random() * 10) - 5));
+            cpuUsage.innerHTML = `<strong>Current:</strong> ${newCPU.toFixed(1)}%`;
+        }, 10000);
+    </script>
+</body>
+</html> 
