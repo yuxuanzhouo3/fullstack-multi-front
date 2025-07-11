@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MornVPN - Secure Privacy Platform</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
+        .feature { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; backdrop-filter: blur(10px); }
+        .login-form { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 10px; margin-top: 30px; backdrop-filter: blur(10px); }
+        input, button { width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 5px; }
+        button { background: #4CAF50; color: white; cursor: pointer; }
+        button:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 MornVPN</h1>
+            <p>Complete Secure Connection & Privacy Protection Platform</p>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🔐 Secure Connection</h3>
+                <p>Military-grade encryption and secure tunneling to protect your data and online activities.</p>
+            </div>
+            <div class="feature">
+                <h3>🛡️ Privacy Protection</h3>
+                <p>Hide your IP address, encrypt your traffic, and maintain complete anonymity online.</p>
+            </div>
+            <div class="feature">
+                <h3>🌍 Geo-Unblocking</h3>
+                <p>Access content from anywhere in the world by bypassing geographic restrictions and censorship.</p>
+            </div>
+        </div>
+        
+        <div class="login-form">
+            <h2>Login to MornVPN</h2>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Username" value="admin">
+                <input type="password" id="password" placeholder="Password" value="password123">
+                <button type="submit">Login</button>
+            </form>
+            <p style="text-align: center; margin-top: 20px;">
+                <strong>Demo Credentials:</strong> admin / password123
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'admin' && password === 'password123') {
+                alert('Login successful! Welcome to MornVPN.');
+            } else {
+                alert('Invalid credentials. Try admin / password123');
+            }
+        });
+    </script>
+</body>
+</html> 
