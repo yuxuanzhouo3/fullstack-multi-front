@@ -3,15 +3,15 @@
   "builds": [
     { "src": "api/*.js", "use": "@vercel/node" },
     {
-      "src": "api/product.js",
+      "src": "api/shared/product.js",
       "use": "@vercel/node",
       "config": {
         "includeFiles": [
-          "apps/1_rent/dist/index.html",
-          "apps/2_job/dist/index.html",
-          "apps/3_social/dist/index.html",
-          "apps/4_deepfake_detector/dist/index.html",
-          "apps/5_accelerator/dist/index.html"
+          "apps/1_rent/index.html",
+          "apps/2_job/index.html",
+          "apps/3_social/index.html",
+          "apps/4_deepfake_detector/index.html",
+          "apps/5_vpn/index.html"
         ]
       }
     },
@@ -21,6 +21,6 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1.js" },
     { "src": "/", "dest": "/apps/status/dist/index.html" },
-    { "src": "/(.*)", "dest": "/api/product.js" }
+    { "src": "/(.*)", "dest": "/api/shared/product.js" }
   ]
 } 
