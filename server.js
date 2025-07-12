@@ -128,7 +128,7 @@ const appDirMap = {
   'job': '2_job', 
   'social': '3_social',
   'deepfake_detector': '4_deepfake_detector',
-  'vpn': '5_vpn'
+  'accelerator': '5_accelerator'
 };
 
 // Helper: get product slug from host
@@ -219,7 +219,7 @@ const PRODUCT_STATIC_MAP = {
   'job': '2_job',
   'social': '3_social',
   'deepfake': '4_deepfake_detector',
-  'vpn': '5_vpn'
+  'accelerator': '5_accelerator'
 };
 
 // Serve product main pages like /rent/index.html
@@ -250,7 +250,7 @@ app.get('/:productSlug/*', (req, res) => {
 });
 
 // Static public assets (must be after all API/product routes, before catch-all)
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/src', express.static(path.join(__dirname, 'src')));
 
 // WebSocket for real-time features
 io.on('connection', (socket) => {
@@ -288,7 +288,7 @@ app.get('*', (req, res) => {
   }
   // Fallback to main landing page
   console.log('[DEBUG] Falling back to main landing page');
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'src', 'index.html'));
 });
 
 // Error handling

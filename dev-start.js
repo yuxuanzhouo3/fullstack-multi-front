@@ -16,7 +16,7 @@ const BACKEND_PORT = process.env.BACKEND_PORT || 8000;
 
 // Middleware
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static('src'));
 app.use(cookieParser());
 app.use(session({
   secret: 'multi-tenant-secret-key',
@@ -71,8 +71,8 @@ const PRODUCTS = {
     features: ['ai-detection', 'media-analysis', 'security'],
     apiEndpoint: `http://localhost:${BACKEND_PORT}/api`
   },
-  'vpn': {
-    name: 'MornVPN',
+  'accelerator': {
+    name: 'Accelerator - USA to China Access',
     theme: 'dark',
     features: ['secure-connection', 'privacy-protection', 'geo-unblocking'],
     apiEndpoint: `http://localhost:${BACKEND_PORT}/api`
