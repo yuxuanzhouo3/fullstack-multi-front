@@ -219,6 +219,9 @@ app.get('/api/chat/history', async (req, res) => {
 });
 
 // Analytics endpoint (Supabase example)
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+
 app.get('/api/analytics/get', async (req, res) => {
   try {
     const { data, error } = await supabase.from('analytics').select('*').limit(10);
