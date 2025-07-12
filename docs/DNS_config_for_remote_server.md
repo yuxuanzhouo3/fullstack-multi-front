@@ -12,7 +12,7 @@ This document provides complete DNS configuration instructions for deploying you
 | **MornJob** | `job.mornscience.com` | `job` | Job postings, applicant tracking, recruitment |
 | **MornSocial** | `social.mornscience.com` | `social` | Social networking, messaging, content sharing |
 | **Deepfake Detector** | `deepfake-detector.mornscience.com` | `deepfake_detector` | AI detection, media analysis, security |
-| **MornVPN** | `vpn.mornscience.com` | `vpn` | Secure connection, privacy protection, geo-unblocking |
+| **Accelerator** | `accelerator.mornscience.com` | `accelerator` | USA to China access platform |
 
 ## 📋 Prerequisites
 
@@ -46,7 +46,7 @@ In your domain registrar's DNS management panel, add the following **A Records**
 | `job.mornscience.com` | A | `203.0.113.1` | 300 |
 | `social.mornscience.com` | A | `203.0.113.1` | 300 |
 | `deepfake-detector.mornscience.com` | A | `203.0.113.1` | 300 |
-| `vpn.mornscience.com` | A | `203.0.113.1` | 300 |
+| `accelerator.mornscience.com` | A | `203.0.113.1` | 300 |
 
 #### Optional: Alternative Domains
 
@@ -55,7 +55,7 @@ In your domain registrar's DNS management panel, add the following **A Records**
 | `mornrent.com` | A | `203.0.113.1` | 300 |
 | `mornjob.com` | A | `203.0.113.1` | 300 |
 | `mornsocial.com` | A | `203.0.113.1` | 300 |
-| `mornvpn.com` | A | `203.0.113.1` | 300 |
+| `accelerator.com` | A | `203.0.113.1` | 300 |
 
 ### Step 3: SSL Certificate Configuration
 
@@ -71,7 +71,7 @@ sudo certbot certonly --standalone -d rent.mornscience.com
 sudo certbot certonly --standalone -d job.mornscience.com
 sudo certbot certonly --standalone -d social.mornscience.com
 sudo certbot certonly --standalone -d deepfake-detector.mornscience.com
-sudo certbot certonly --standalone -d vpn.mornscience.com
+sudo certbot certonly --standalone -d accelerator.mornscience.com
 ```
 
 #### Using Nginx (Alternative)
@@ -80,7 +80,7 @@ sudo certbot certonly --standalone -d vpn.mornscience.com
 # /etc/nginx/sites-available/mornscience
 server {
     listen 80;
-    server_name rent.mornscience.com job.mornscience.com social.mornscience.com deepfake-detector.mornscience.com vpn.mornscience.com;
+    server_name rent.mornscience.com job.mornscience.com social.mornscience.com deepfake-detector.mornscience.com accelerator.mornscience.com;
     return 301 https://$server_name$request_uri;
 }
 
@@ -136,7 +136,7 @@ EOF
   "job.mornscience.com": "job",
   "social.mornscience.com": "social",
   "deepfake-detector.mornscience.com": "deepfake_detector",
-  "vpn.mornscience.com": "vpn"
+  "accelerator.mornscience.com": "accelerator"
 }
 ```
 
@@ -148,7 +148,7 @@ EOF
   { "id": "job", "slug": "job", "displayName": "MornJob" },
   { "id": "social", "slug": "social", "displayName": "MornSocial" },
   { "id": "deepfake_detector", "slug": "deepfake_detector", "displayName": "Deepfake Detector" },
-  { "id": "vpn", "slug": "vpn", "displayName": "MornVPN" }
+  { "id": "accelerator", "slug": "accelerator", "displayName": "Accelerator" }
 ]
 ```
 
@@ -176,7 +176,7 @@ nslookup rent.mornscience.com
 nslookup job.mornscience.com
 nslookup social.mornscience.com
 nslookup deepfake-detector.mornscience.com
-nslookup vpn.mornscience.com
+nslookup accelerator.mornscience.com
 ```
 
 ### Domain Access Test
@@ -187,7 +187,7 @@ curl -I https://rent.mornscience.com
 curl -I https://job.mornscience.com
 curl -I https://social.mornscience.com
 curl -I https://deepfake-detector.mornscience.com
-curl -I https://vpn.mornscience.com
+curl -I https://accelerator.mornscience.com
 ```
 
 ## 📊 Expected Results
@@ -202,7 +202,7 @@ When users visit your domains, they should see:
 | `https://job.mornscience.com` | MornJob | Job postings, applicant tracking, recruitment |
 | `https://social.mornscience.com` | MornSocial | Social networking, messaging, content sharing |
 | `https://deepfake-detector.mornscience.com` | Deepfake Detector | AI detection, media analysis, security |
-| `https://vpn.mornscience.com` | MornVPN | Secure connection, privacy protection, geo-unblocking |
+| `https://accelerator.mornscience.com` | Accelerator | USA to China access platform |
 
 ### Server Response Headers
 
