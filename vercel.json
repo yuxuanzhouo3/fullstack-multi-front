@@ -14,10 +14,12 @@
         ]
       }
     },
+    { "src": "api/*.js", "use": "@vercel/node" },
     { "src": "src/**/*", "use": "@vercel/static" },
     { "src": "apps/**/*", "use": "@vercel/static" }
   ],
   "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1.js" },
     { "src": "/(.*)", "dest": "/api/product.js" }
   ]
 } 
