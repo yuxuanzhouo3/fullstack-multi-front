@@ -1,7 +1,19 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/product.js", "use": "@vercel/node" },
+    {
+      "src": "api/product.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "apps/1_rent/dist/index.html",
+          "apps/2_job/dist/index.html",
+          "apps/3_social/dist/index.html",
+          "apps/4_deepfake_detector/dist/index.html",
+          "apps/5_accelerator/dist/index.html"
+        ]
+      }
+    },
     { "src": "src/**/*", "use": "@vercel/static" },
     { "src": "apps/**/*", "use": "@vercel/static" }
   ],
