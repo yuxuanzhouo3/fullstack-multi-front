@@ -196,3 +196,4 @@
 ## Misc
 #*.tgz
 #*.tar.gz
+.vercel

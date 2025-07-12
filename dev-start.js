@@ -361,24 +361,15 @@ app.get('/', (req, res) => {
         <h2>Available Applications:</h2>
         ${tenants.map(tenant => {
             const product = PRODUCTS[tenant.id];
-            const meaningfulUrls = Object.entries(urlMapping)
-                .filter(([key, value]) => value === tenant.slug)
-                .map(([key, value]) => key);
-            const domains = Object.entries(dnsConfig)
-                .filter(([domain, slug]) => slug === tenant.slug)
-                .map(([domain, slug]) => domain);
+            // Construct subdomain for mornhub.net
+            const subdomain = `${tenant.id}.mornhub.net`;
             return `
                 <div class="product">
                     <h3>${product.name}</h3>
                     <p><strong>ID:</strong> ${tenant.id}</p>
-                    <p><strong>Random Slug:</strong> ${tenant.slug}</p>
-                    <p><strong>Meaningful URLs:</strong> ${meaningfulUrls.map(url => `/${url}`).join(', ')}</p>
-                    <p><strong>Domains:</strong> ${domains.map(domain => `${domain}:${PORT}`).join(', ')}</p>
                     <p><strong>Theme:</strong> ${product.theme}</p>
                     <p><strong>Features:</strong> ${product.features.join(', ')}</p>
-                    <p><a href="/${tenant.slug}">Access via Random Slug →</a></p>
-                    ${meaningfulUrls.length > 0 ? `<p><a href="/${meaningfulUrls[0]}">Access via Meaningful URL →</a></p>` : ''}
-                    ${domains.length > 0 ? `<p><a href="http://${domains[0]}:${PORT}" target="_blank">Access via Domain →</a></p>` : ''}
+                    <p><a href="https://${subdomain}" target="_blank">Access via Subdomain →</a></p>
                 </div>
             `;
         }).join('')}
