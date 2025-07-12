@@ -15,8 +15,8 @@ export default async function handler(req, res) {
     'accelerator': '5_vpn'
   };
 
-  // Serve dashboard for root domain (no subdomain)
-  if (!subdomain) {
+  // Serve dashboard for root domain or www subdomain
+  if (!subdomain || subdomain === 'www') {
     const dashboardPath = path.join(process.cwd(), 'apps', 'status', 'dist', 'index.html');
     if (fs.existsSync(dashboardPath)) {
       const html = fs.readFileSync(dashboardPath, 'utf8');
