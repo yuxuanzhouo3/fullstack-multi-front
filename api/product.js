@@ -65,6 +65,6 @@ export default async function handler(req, res) {
     res.status(200).end(html);
   } catch (err) {
     console.error('Error reading file:', err.message);
-    res.status(404).end('Product not found');
+    res.status(404).end(`Product not found. Tried: ${productPath}`);
   }
 } 
