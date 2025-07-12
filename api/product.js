@@ -4,6 +4,8 @@ import path from 'path';
 export default async function handler(req, res) {
   const host = req.headers.host;
   const mainDomain = 'mornhub.net';
+  
+  console.log('Request received:', { host, url: req.url, method: req.method });
 
   // Serve dashboard for root domain and www
   if (host === mainDomain || host === `www.${mainDomain}`) {
@@ -25,6 +27,8 @@ export default async function handler(req, res) {
   if (match) {
     subdomain = match[1];
   }
+  
+  console.log('Subdomain extracted:', subdomain);
 
   if (!subdomain) {
     // fallback: show dashboard if no subdomain
@@ -48,14 +52,19 @@ export default async function handler(req, res) {
   else if (subdomain === 'accelerator') productDir = '5_accelerator';
   else if (/^product-\d+$/.test(subdomain)) productDir = subdomain; // e.g., product-1234
   else productDir = subdomain; // fallback for any other custom product
+  
+  console.log('Product directory mapped:', productDir);
 
   // Serve the product's index.html
   const productPath = path.join(process.cwd(), 'apps', productDir, 'dist', 'index.html');
+  console.log('Attempting to serve file from:', productPath);
   try {
     const html = await fs.readFile(productPath, 'utf8');
+    console.log('File read successfully, serving product');
     res.setHeader('Content-Type', 'text/html');
     res.status(200).end(html);
   } catch (err) {
+    console.error('Error reading file:', err.message);
     res.status(404).end('Product not found');
   }
 } 
