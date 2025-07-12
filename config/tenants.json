@@ -1,0 +1,7 @@
+[
+  { "id": "rent", "slug": "rent", "displayName": "MornRent" },
+  { "id": "job", "slug": "job", "displayName": "MornJob" },
+  { "id": "social", "slug": "social", "displayName": "MornSocial" },
+  { "id": "deepfake_detector", "slug": "deepfake_detector", "displayName": "Deepfake Detector" },
+  { "id": "vpn", "slug": "vpn", "displayName": "MornVPN" }
+]

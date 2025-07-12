@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MornSocial - Social Networking Platform</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
+        .feature { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; backdrop-filter: blur(10px); }
+        .login-form { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 10px; margin-top: 30px; backdrop-filter: blur(10px); }
+        input, button { width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 5px; }
+        button { background: #4CAF50; color: white; cursor: pointer; }
+        button:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 MornSocial</h1>
+            <p>Complete Social Networking & Community Platform</p>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>👥 Social Networking</h3>
+                <p>Connect with friends, family, and colleagues through profiles, friend requests, and social feeds.</p>
+            </div>
+            <div class="feature">
+                <h3>💬 Messaging</h3>
+                <p>Real-time messaging, group chats, and video calls for seamless communication.</p>
+            </div>
+            <div class="feature">
+                <h3>📱 Content Sharing</h3>
+                <p>Share photos, videos, stories, and updates with your network and the world.</p>
+            </div>
+        </div>
+        
+        <div class="login-form">
+            <h2>Login to MornSocial</h2>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Username" value="admin">
+                <input type="password" id="password" placeholder="Password" value="password123">
+                <button type="submit">Login</button>
+            </form>
+            <p style="text-align: center; margin-top: 20px;">
+                <strong>Demo Credentials:</strong> admin / password123
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'admin' && password === 'password123') {
+                alert('Login successful! Welcome to MornSocial.');
+            } else {
+                alert('Invalid credentials. Try admin / password123');
+            }
+        });
+    </script>
+</body>
+</html> 
