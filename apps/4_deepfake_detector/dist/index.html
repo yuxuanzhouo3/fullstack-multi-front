@@ -2,24 +2,542 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Deepfake Detector</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deepfake Detector - AI-Powered Media Authenticity Platform</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #fff3e0; color: #222; margin: 0; padding: 40px; }
-    .container { max-width: 600px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #ccc; padding: 32px; }
-    h1 { color: #e65100; }
-    .desc { margin: 24px 0; font-size: 1.2em; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 0;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #ff5722;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #ff5722;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: #ff5722;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+    }
+
+    .cta-button:hover {
+      background: #e64a19;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 87, 34, 0.4);
+    }
+
+    .features {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      color: #ff5722;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .feature-card p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .demo-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .demo-credentials {
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      padding: 2rem;
+      border-radius: 15px;
+      max-width: 500px;
+      margin: 2rem auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .demo-credentials h3 {
+      color: #ff5722;
+      margin-bottom: 1rem;
+    }
+
+    .credential-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .credential-item:last-child {
+      border-bottom: none;
+    }
+
+    .copy-btn {
+      background: #ff5722;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: background 0.3s;
+    }
+
+    .copy-btn:hover {
+      background: #e64a19;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      color: white;
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .detection-types {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 4rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 2rem auto;
+    }
+
+    .type-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s;
+    }
+
+    .type-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .type-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .upload-demo {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 4rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .upload-area {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      padding: 3rem;
+      margin: 2rem auto;
+      max-width: 600px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .upload-area:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .upload-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer {
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .nav {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-links {
+        gap: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🤖 Welcome to Deepfake Detector!</h1>
-    <div class="desc">AI-powered Deepfake Detection Platform</div>
-    <ul>
-      <li>🧠 AI Detection</li>
-      <li>🎬 Media Analysis</li>
-      <li>🔒 Security & Trust</li>
-    </ul>
-    <p><strong>Demo Credentials:</strong> admin / password123</p>
-  </div>
+  <header class="header">
+    <nav class="nav">
+      <div class="logo">🔍 Deepfake Detector</div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#types">Detection Types</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>🔍 Deepfake Detector</h1>
+    <p>AI-Powered Media Authenticity Platform</p>
+    <p>Detect and verify the authenticity of images, videos, and audio</p>
+    <a href="#demo" class="cta-button">Try Detection Now</a>
+  </section>
+
+  <section class="stats">
+    <div class="stat-item">
+      <div class="stat-number">99.8%</div>
+      <div class="stat-label">Accuracy Rate</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">1M+</div>
+      <div class="stat-label">Files Analyzed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">50K+</div>
+      <div class="stat-label">Users Trust Us</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">24/7</div>
+      <div class="stat-label">Real-time Detection</div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="feature-card">
+      <div class="feature-icon">🤖</div>
+      <h3>AI-Powered Detection</h3>
+      <p>Advanced machine learning algorithms trained on millions of authentic and manipulated media files for unparalleled accuracy.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Real-time Analysis</h3>
+      <p>Instant detection results with detailed confidence scores and manipulation indicators. No waiting, immediate insights.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3>Multi-format Support</h3>
+      <p>Support for images (JPG, PNG, WebP), videos (MP4, AVI, MOV), and audio files (MP3, WAV, FLAC) with batch processing.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Privacy & Security</h3>
+      <p>End-to-end encryption, secure file handling, and automatic deletion after analysis. Your privacy is our priority.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Detailed Reports</h3>
+      <p>Comprehensive analysis reports with manipulation indicators, confidence scores, and technical details for verification.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌐</div>
+      <h3>API Integration</h3>
+      <p>RESTful API for seamless integration into your applications, websites, or content management systems.</p>
+    </div>
+  </section>
+
+  <section class="detection-types" id="types">
+    <h2>Detection Types</h2>
+    <p>Comprehensive analysis for all types of media manipulation</p>
+    
+    <div class="types-grid">
+      <div class="type-item">
+        <div class="type-icon">🖼️</div>
+        <h3>Image Deepfakes</h3>
+        <p>Detect face swaps, object manipulation, and AI-generated images</p>
+      </div>
+      <div class="type-item">
+        <div class="type-icon">🎥</div>
+        <h3>Video Deepfakes</h3>
+        <p>Identify synthetic videos, face replacement, and temporal inconsistencies</p>
+      </div>
+      <div class="type-item">
+        <div class="type-icon">🎵</div>
+        <h3>Audio Deepfakes</h3>
+        <p>Detect voice cloning, audio splicing, and synthetic speech</p>
+      </div>
+      <div class="type-item">
+        <div class="type-icon">📝</div>
+        <h3>Text Generation</h3>
+        <p>Identify AI-generated text content and writing style analysis</p>
+      </div>
+      <div class="type-item">
+        <div class="type-icon">🔍</div>
+        <h3>Metadata Analysis</h3>
+        <p>Examine file metadata for inconsistencies and manipulation traces</p>
+      </div>
+      <div class="type-item">
+        <div class="type-icon">🛡️</div>
+        <h3>Forensic Analysis</h3>
+        <p>Advanced forensic techniques for detecting sophisticated manipulations</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="upload-demo">
+    <h2>Try Our Detection</h2>
+    <p>Upload a file to test our deepfake detection capabilities</p>
+    
+    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+      <div class="upload-icon">📁</div>
+      <h3>Drop files here or click to upload</h3>
+      <p>Supports images, videos, and audio files up to 100MB</p>
+      <input type="file" id="fileInput" style="display: none;" accept="image/*,video/*,audio/*">
+    </div>
+  </section>
+
+  <section class="demo-section" id="demo">
+    <h2>Demo Access</h2>
+    <p>Experience the full power of our Deepfake Detector</p>
+    
+    <div class="demo-credentials">
+      <h3>Demo Credentials</h3>
+      <div class="credential-item">
+        <span>Username:</span>
+        <div>
+          <span id="username">admin</span>
+          <button class="copy-btn" onclick="copyToClipboard('username')">Copy</button>
+        </div>
+      </div>
+      <div class="credential-item">
+        <span>Password:</span>
+        <div>
+          <span id="password">password123</span>
+          <button class="copy-btn" onclick="copyToClipboard('password')">Copy</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2024 Deepfake Detector. All rights reserved. | AI-Powered Media Authenticity Platform</p>
+  </footer>
+
+  <script>
+    function copyToClipboard(elementId) {
+      const element = document.getElementById(elementId);
+      const text = element.textContent;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        const button = element.nextElementSibling;
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.style.background = '#4caf50';
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.style.background = '#ff5722';
+        }, 2000);
+      });
+    }
+
+    // File upload handling
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        alert(`File "${file.name}" selected. This is a demo - in a real implementation, the file would be uploaded and analyzed.`);
+      }
+    });
+
+    // Drag and drop functionality
+    const uploadArea = document.querySelector('.upload-area');
+    
+    uploadArea.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      uploadArea.style.background = 'rgba(255, 255, 255, 0.2)';
+      uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.6)';
+    });
+
+    uploadArea.addEventListener('dragleave', function(e) {
+      e.preventDefault();
+      uploadArea.style.background = 'rgba(255, 255, 255, 0.1)';
+      uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+    });
+
+    uploadArea.addEventListener('drop', function(e) {
+      e.preventDefault();
+      uploadArea.style.background = 'rgba(255, 255, 255, 0.1)';
+      uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+      
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        alert(`File "${files[0].name}" dropped. This is a demo - in a real implementation, the file would be uploaded and analyzed.`);
+      }
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add some interactive animations
+    const featureCards = document.querySelectorAll('.feature-card');
+    const typeItems = document.querySelectorAll('.type-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    });
+
+    featureCards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.6s, transform 0.6s';
+      observer.observe(card);
+    });
+
+    typeItems.forEach(item => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(20px)';
+      item.style.transition = 'opacity 0.6s, transform 0.6s';
+      observer.observe(item);
+    });
+  </script>
 </body>
 </html> 

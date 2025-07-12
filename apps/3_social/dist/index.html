@@ -2,24 +2,467 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>MornSocial - Social Network</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MornSocial - Next-Generation Social Networking Platform</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #ede7f6; color: #222; margin: 0; padding: 40px; }
-    .container { max-width: 600px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #ccc; padding: 32px; }
-    h1 { color: #512da8; }
-    .desc { margin: 24px 0; font-size: 1.2em; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 0;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #e91e63;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #e91e63;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: #e91e63;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+    }
+
+    .cta-button:hover {
+      background: #c2185b;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+    }
+
+    .features {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      color: #e91e63;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .feature-card p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .demo-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .demo-credentials {
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      padding: 2rem;
+      border-radius: 15px;
+      max-width: 500px;
+      margin: 2rem auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .demo-credentials h3 {
+      color: #e91e63;
+      margin-bottom: 1rem;
+    }
+
+    .credential-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .credential-item:last-child {
+      border-bottom: none;
+    }
+
+    .copy-btn {
+      background: #e91e63;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: background 0.3s;
+    }
+
+    .copy-btn:hover {
+      background: #c2185b;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      color: white;
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .social-features {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 4rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 2rem auto;
+    }
+
+    .social-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s;
+    }
+
+    .social-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .social-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer {
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .nav {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-links {
+        gap: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🌐 Welcome to MornSocial!</h1>
-    <div class="desc">Complete Social Networking & Community Platform</div>
-    <ul>
-      <li>👥 Social Networking</li>
-      <li>💬 Messaging</li>
-      <li>📱 Content Sharing</li>
-    </ul>
-    <p><strong>Demo Credentials:</strong> admin / password123</p>
-  </div>
+  <header class="header">
+    <nav class="nav">
+      <div class="logo">🌐 MornSocial</div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#social">Social</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>🌐 MornSocial</h1>
+    <p>Next-Generation Social Networking Platform</p>
+    <p>Connect, share, and engage with people around the world</p>
+    <a href="#demo" class="cta-button">Join Now</a>
+  </section>
+
+  <section class="stats">
+    <div class="stat-item">
+      <div class="stat-number">1M+</div>
+      <div class="stat-label">Active Users</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">5M+</div>
+      <div class="stat-label">Posts Shared</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">100K+</div>
+      <div class="stat-label">Communities</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">99.9%</div>
+      <div class="stat-label">Uptime</div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3>Real-time Messaging</h3>
+      <p>Instant messaging with text, voice, and video calls. Group chats, channels, and direct messaging with end-to-end encryption.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📸</div>
+      <h3>Content Sharing</h3>
+      <p>Share photos, videos, stories, and live streams. Advanced editing tools, filters, and creative effects for your content.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👥</div>
+      <h3>Community Building</h3>
+      <p>Create and join communities based on interests, location, or profession. Moderated discussions and event organization.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>AI Recommendations</h3>
+      <p>Smart content recommendations based on your interests and behavior. Discover new friends and relevant content.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Privacy & Security</h3>
+      <p>Advanced privacy controls, data encryption, and security features to protect your personal information and content.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Analytics & Insights</h3>
+      <p>Track your social engagement, content performance, and audience growth with detailed analytics and insights.</p>
+    </div>
+  </section>
+
+  <section class="social-features" id="social">
+    <h2>Social Features</h2>
+    <p>Everything you need to stay connected</p>
+    
+    <div class="features-grid">
+      <div class="social-item">
+        <div class="social-icon">💬</div>
+        <h3>Chat & Messaging</h3>
+        <p>Real-time conversations with friends and family</p>
+      </div>
+      <div class="social-item">
+        <div class="social-icon">📷</div>
+        <h3>Photo Sharing</h3>
+        <p>Share your moments with beautiful photo galleries</p>
+      </div>
+      <div class="social-item">
+        <div class="social-icon">🎥</div>
+        <h3>Video Stories</h3>
+        <p>Create and share short video stories</p>
+      </div>
+      <div class="social-item">
+        <div class="social-icon">🎉</div>
+        <h3>Events</h3>
+        <p>Create and discover local events</p>
+      </div>
+      <div class="social-item">
+        <div class="social-icon">🎮</div>
+        <h3>Gaming</h3>
+        <p>Play games with friends online</p>
+      </div>
+      <div class="social-item">
+        <div class="social-icon">🛒</div>
+        <h3>Marketplace</h3>
+        <p>Buy and sell items in your community</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section" id="demo">
+    <h2>Try Our Demo</h2>
+    <p>Experience the full power of MornSocial with our interactive demo</p>
+    
+    <div class="demo-credentials">
+      <h3>Demo Credentials</h3>
+      <div class="credential-item">
+        <span>Username:</span>
+        <div>
+          <span id="username">admin</span>
+          <button class="copy-btn" onclick="copyToClipboard('username')">Copy</button>
+        </div>
+      </div>
+      <div class="credential-item">
+        <span>Password:</span>
+        <div>
+          <span id="password">password123</span>
+          <button class="copy-btn" onclick="copyToClipboard('password')">Copy</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2024 MornSocial. All rights reserved. | Next-Generation Social Platform</p>
+  </footer>
+
+  <script>
+    function copyToClipboard(elementId) {
+      const element = document.getElementById(elementId);
+      const text = element.textContent;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        const button = element.nextElementSibling;
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.style.background = '#4caf50';
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.style.background = '#e91e63';
+        }, 2000);
+      });
+    }
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add some interactive animations
+    const featureCards = document.querySelectorAll('.feature-card');
+    const socialItems = document.querySelectorAll('.social-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    });
+
+    featureCards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.6s, transform 0.6s';
+      observer.observe(card);
+    });
+
+    socialItems.forEach(item => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(20px)';
+      item.style.transition = 'opacity 0.6s, transform 0.6s';
+      observer.observe(item);
+    });
+  </script>
 </body>
 </html> 
