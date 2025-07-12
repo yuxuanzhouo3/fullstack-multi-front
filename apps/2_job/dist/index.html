@@ -3,466 +3,663 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MornJob - Advanced Recruitment & Job Application Platform</title>
+    <title>MornJob Dashboard - Recruitment Platform</title>
     <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: #333;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
 
-    .header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 1rem 0;
-      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+        /* Login Screen */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            padding: 20px;
+        }
 
-    .nav {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 2rem;
-    }
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
 
-    .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: #1565c0;
-    }
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
+        .login-header h1 {
+            color: #4CAF50;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
 
-    .nav-links a {
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
+        .login-header p {
+            color: #666;
+        }
 
-    .nav-links a:hover {
-      color: #1565c0;
-    }
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-    .hero {
-      text-align: center;
-      padding: 4rem 2rem;
-      color: white;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
 
-    .hero h1 {
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
 
-    .hero p {
-      font-size: 1.3rem;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
+        .form-group input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
 
-    .cta-button {
-      display: inline-block;
-      background: #1565c0;
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: all 0.3s;
-      box-shadow: 0 4px 15px rgba(21, 101, 192, 0.3);
-    }
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
 
-    .cta-button:hover {
-      background: #0d47a1;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(21, 101, 192, 0.4);
-    }
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
 
-    .features {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
+        .demo-credentials {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
 
-    .feature-card {
-      background: white;
-      border-radius: 15px;
-      padding: 2rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-      text-align: center;
-    }
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
 
-    .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    }
+        .sidebar {
+            width: 250px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
 
-    .feature-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
 
-    .feature-card h3 {
-      color: #1565c0;
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-    }
+        .sidebar-header h2 {
+            color: #4CAF50;
+            font-size: 1.5rem;
+        }
 
-    .feature-card p {
-      color: #666;
-      line-height: 1.6;
-    }
+        .nav-menu {
+            padding: 20px 0;
+        }
 
-    .demo-section {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 3rem 2rem;
-      text-align: center;
-      color: white;
-    }
+        .nav-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    .demo-credentials {
-      background: rgba(255, 255, 255, 0.9);
-      color: #333;
-      padding: 2rem;
-      border-radius: 15px;
-      max-width: 500px;
-      margin: 2rem auto;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    }
+        .nav-item:hover,
+        .nav-item.active {
+            background: #f8f9fa;
+            color: #4CAF50;
+        }
 
-    .demo-credentials h3 {
-      color: #1565c0;
-      margin-bottom: 1rem;
-    }
+        .nav-item i {
+            font-size: 1.2rem;
+        }
 
-    .credential-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid #eee;
-    }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
 
-    .credential-item:last-child {
-      border-bottom: none;
-    }
+        .top-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .copy-btn {
-      background: #1565c0;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 0.8rem;
-      transition: background 0.3s;
-    }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .copy-btn:hover {
-      background: #0d47a1;
-    }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-    }
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
 
-    .stat-item {
-      text-align: center;
-      color: white;
-    }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
 
-    .stat-number {
-      font-size: 3rem;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
 
-    .stat-label {
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
 
-    .job-categories {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 4rem 2rem;
-      text-align: center;
-      color: white;
-    }
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
 
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 2rem auto;
-    }
+        .content-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
 
-    .category-item {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 2rem;
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-      transition: transform 0.3s;
-    }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-    .category-item:hover {
-      transform: translateY(-5px);
-    }
+        .section-title {
+            font-size: 1.5rem;
+            color: #333;
+        }
 
-    .category-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
+        .add-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
 
-    .footer {
-      background: rgba(0, 0, 0, 0.8);
-      color: white;
-      text-align: center;
-      padding: 2rem;
-      margin-top: 4rem;
-    }
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
 
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-      
-      .nav {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      
-      .nav-links {
-        gap: 1rem;
-      }
-    }
+        .job-card {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px;
+        }
+
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .job-company {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .job-info {
+            padding: 20px;
+        }
+
+        .job-details {
+            color: #666;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .job-detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .job-salary {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .job-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .job-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+
+        .view-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .edit-btn {
+            background: #2196F3;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .jobs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-  <header class="header">
-    <nav class="nav">
-      <div class="logo">💼 MornJob</div>
-      <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#categories">Categories</a></li>
-        <li><a href="#demo">Demo</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <section class="hero">
-            <h1>💼 MornJob</h1>
-    <p>Advanced Recruitment & Job Application Platform</p>
-    <p>Connect top talent with amazing opportunities</p>
-    <a href="#demo" class="cta-button">Try Demo Now</a>
-  </section>
-
-  <section class="stats">
-    <div class="stat-item">
-      <div class="stat-number">50K+</div>
-      <div class="stat-label">Active Jobs</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">100K+</div>
-      <div class="stat-label">Job Seekers</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">10K+</div>
-      <div class="stat-label">Companies</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">95%</div>
-      <div class="stat-label">Success Rate</div>
-    </div>
-  </section>
-
-  <section class="features" id="features">
-    <div class="feature-card">
-      <div class="feature-icon">📝</div>
-      <h3>Job Postings</h3>
-      <p>Create detailed job postings with requirements, benefits, and company information. Advanced filtering and search capabilities for better candidate matching.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">👤</div>
-      <h3>Applicant Tracking</h3>
-      <p>Comprehensive applicant management system with resume parsing, skill matching, interview scheduling, and candidate evaluation tools.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🤝</div>
-      <h3>Recruitment Management</h3>
-      <p>Streamlined hiring process with automated workflows, team collaboration tools, and performance analytics for better hiring decisions.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎯</div>
-      <h3>AI Matching</h3>
-      <p>Advanced AI algorithms that match candidates to job requirements based on skills, experience, and cultural fit for optimal placements.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <h3>Analytics Dashboard</h3>
-      <p>Real-time insights into hiring metrics, candidate pipeline, time-to-hire, and recruitment performance with actionable recommendations.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📱</div>
-      <h3>Mobile App</h3>
-      <p>Full mobile access for job seekers and recruiters. Apply to jobs, schedule interviews, and manage applications on the go.</p>
-        </div>
-  </section>
-
-  <section class="job-categories" id="categories">
-    <h2>Popular Job Categories</h2>
-    <p>Find opportunities in your field</p>
-    
-    <div class="categories-grid">
-      <div class="category-item">
-        <div class="category-icon">💻</div>
-        <h3>Technology</h3>
-        <p>Software, IT, Data Science</p>
-      </div>
-      <div class="category-item">
-        <div class="category-icon">🏥</div>
-        <h3>Healthcare</h3>
-        <p>Medical, Nursing, Research</p>
-      </div>
-      <div class="category-item">
-        <div class="category-icon">💰</div>
-        <h3>Finance</h3>
-        <p>Banking, Investment, Accounting</p>
-      </div>
-      <div class="category-item">
-        <div class="category-icon">🎨</div>
-        <h3>Creative</h3>
-        <p>Design, Marketing, Media</p>
-      </div>
-      <div class="category-item">
-        <div class="category-icon">🏭</div>
-        <h3>Manufacturing</h3>
-        <p>Engineering, Production, Quality</p>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>💼 MornJob</h1>
+                <p>Recruitment & Job Management Platform</p>
             </div>
-      <div class="category-item">
-        <div class="category-icon">📚</div>
-        <h3>Education</h3>
-        <p>Teaching, Training, Administration</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            <div class="demo-credentials">
+                <strong>Demo Credentials:</strong><br>
+                Email: hr@mornjob.com<br>
+                Password: demo123
             </div>
-            </div>
-  </section>
-
-  <section class="demo-section" id="demo">
-    <h2>Try Our Demo</h2>
-    <p>Experience the full power of MornJob with our interactive demo</p>
-    
-    <div class="demo-credentials">
-      <h3>Demo Credentials</h3>
-      <div class="credential-item">
-        <span>Username:</span>
-        <div>
-          <span id="username">admin</span>
-          <button class="copy-btn" onclick="copyToClipboard('username')">Copy</button>
-        </div>
-      </div>
-      <div class="credential-item">
-        <span>Password:</span>
-        <div>
-          <span id="password">password123</span>
-          <button class="copy-btn" onclick="copyToClipboard('password')">Copy</button>
-        </div>
         </div>
     </div>
-  </section>
 
-  <footer class="footer">
-    <p>&copy; 2024 MornJob. All rights reserved. | Advanced Recruitment Platform</p>
-  </footer>
-    
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>💼 MornJob</h2>
+            </div>
+            <div class="nav-menu">
+                <div class="nav-item active" data-section="overview">
+                    <i>📊</i> Overview
+                </div>
+                <div class="nav-item" data-section="jobs">
+                    <i>📋</i> Job Postings
+                </div>
+                <div class="nav-item" data-section="candidates">
+                    <i>👥</i> Candidates
+                </div>
+                <div class="nav-item" data-section="applications">
+                    <i>📝</i> Applications
+                </div>
+                <div class="nav-item" data-section="interviews">
+                    <i>🎯</i> Interviews
+                </div>
+                <div class="nav-item" data-section="analytics">
+                    <i>📈</i> Analytics
+                </div>
+                <div class="nav-item" data-section="settings">
+                    <i>⚙️</i> Settings
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="user-info">
+                    <div class="user-avatar">HR</div>
+                    <div>
+                        <div style="font-weight: bold;">Sarah Johnson</div>
+                        <div style="font-size: 14px; color: #666;">HR Manager</div>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+
+            <!-- Overview Section -->
+            <div id="overview" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Recruitment Dashboard</h2>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Active Jobs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">127</div>
+                        <div class="stat-label">Total Applications</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">23</div>
+                        <div class="stat-label">Interviews Scheduled</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Hires This Month</div>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h3 class="section-title">Recent Job Postings</h3>
+                    <button class="add-btn">Post New Job</button>
+                </div>
+
+                <div class="jobs-grid">
+                    <div class="job-card">
+                        <div class="job-header">
+                            <div class="job-title">Senior Software Engineer</div>
+                            <div class="job-company">TechCorp Inc.</div>
+                        </div>
+                        <div class="job-info">
+                            <div class="job-details">
+                                <span class="job-detail">📍 San Francisco</span>
+                                <span class="job-detail">⏰ Full-time</span>
+                                <span class="job-detail">📅 Posted 2 days ago</span>
+                            </div>
+                            <div class="job-salary">$120,000 - $150,000</div>
+                            <div class="job-description">We're looking for a talented Senior Software Engineer to join our growing team...</div>
+                            <div class="job-actions">
+                                <button class="action-btn view-btn">View Details</button>
+                                <button class="action-btn edit-btn">Edit</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="job-card">
+                        <div class="job-header">
+                            <div class="job-title">Marketing Manager</div>
+                            <div class="job-company">GrowthStart</div>
+                        </div>
+                        <div class="job-info">
+                            <div class="job-details">
+                                <span class="job-detail">📍 New York</span>
+                                <span class="job-detail">⏰ Full-time</span>
+                                <span class="job-detail">📅 Posted 1 week ago</span>
+                            </div>
+                            <div class="job-salary">$80,000 - $100,000</div>
+                            <div class="job-description">Join our dynamic marketing team and help drive growth strategies...</div>
+                            <div class="job-actions">
+                                <button class="action-btn view-btn">View Details</button>
+                                <button class="action-btn edit-btn">Edit</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="job-card">
+                        <div class="job-header">
+                            <div class="job-title">UX Designer</div>
+                            <div class="job-company">DesignHub</div>
+                        </div>
+                        <div class="job-info">
+                            <div class="job-details">
+                                <span class="job-detail">📍 Remote</span>
+                                <span class="job-detail">⏰ Contract</span>
+                                <span class="job-detail">📅 Posted 3 days ago</span>
+                            </div>
+                            <div class="job-salary">$70,000 - $90,000</div>
+                            <div class="job-description">Create amazing user experiences for our innovative products...</div>
+                            <div class="job-actions">
+                                <button class="action-btn view-btn">View Details</button>
+                                <button class="action-btn edit-btn">Edit</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jobs Section -->
+            <div id="jobs" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Job Posting Management</h2>
+                    <button class="add-btn">Create New Job</button>
+                </div>
+                <p>Job posting management features coming soon...</p>
+            </div>
+
+            <!-- Candidates Section -->
+            <div id="candidates" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Candidate Database</h2>
+                    <button class="add-btn">Add Candidate</button>
+                </div>
+                <p>Candidate management features coming soon...</p>
+            </div>
+
+            <!-- Applications Section -->
+            <div id="applications" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Application Tracking</h2>
+                </div>
+                <p>Application tracking features coming soon...</p>
+            </div>
+
+            <!-- Interviews Section -->
+            <div id="interviews" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Interview Management</h2>
+                    <button class="add-btn">Schedule Interview</button>
+                </div>
+                <p>Interview management features coming soon...</p>
+            </div>
+
+            <!-- Analytics Section -->
+            <div id="analytics" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Recruitment Analytics</h2>
+                </div>
+                <p>Analytics and reporting features coming soon...</p>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Account Settings</h2>
+                </div>
+                <p>Settings features coming soon...</p>
+            </div>
+        </div>
+    </div>
+
     <script>
-    function copyToClipboard(elementId) {
-      const element = document.getElementById(elementId);
-      const text = element.textContent;
-      
-      navigator.clipboard.writeText(text).then(() => {
-        const button = element.nextElementSibling;
-        const originalText = button.textContent;
-        button.textContent = 'Copied!';
-        button.style.background = '#4caf50';
-        
-        setTimeout(() => {
-          button.textContent = originalText;
-          button.style.background = '#1565c0';
-        }, 2000);
-      });
-    }
-
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
-    });
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
-    // Add some interactive animations
-    const featureCards = document.querySelectorAll('.feature-card');
-    const categoryItems = document.querySelectorAll('.category-item');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    });
-
-    featureCards.forEach(card => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(20px)';
-      card.style.transition = 'opacity 0.6s, transform 0.6s';
-      observer.observe(card);
-    });
-
-    categoryItems.forEach(item => {
-      item.style.opacity = '0';
-      item.style.transform = 'translateY(20px)';
-      item.style.transition = 'opacity 0.6s, transform 0.6s';
-      observer.observe(item);
+            // Demo login validation
+            if (email === 'hr@mornjob.com' && password === 'demo123') {
+                login();
+            } else {
+                alert('Invalid credentials. Use demo credentials provided.');
+            }
         });
+
+        function login() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            localStorage.setItem('mornjob_logged_in', 'true');
+        }
+
+        function logout() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
+            localStorage.removeItem('mornjob_logged_in');
+            document.getElementById('loginForm').reset();
+        }
+
+        // Check if already logged in
+        if (localStorage.getItem('mornjob_logged_in') === 'true') {
+            login();
+        }
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all nav items
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                // Add active class to clicked item
+                this.classList.add('active');
+
+                // Hide all sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+
+                // Show selected section
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).style.display = 'block';
+            });
+        });
+
+        // Auto-refresh stats every 30 seconds
+        setInterval(() => {
+            // Simulate real-time updates
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const current = parseInt(stat.textContent);
+                if (!isNaN(current)) {
+                    const change = Math.floor(Math.random() * 5) - 2;
+                    const newValue = Math.max(0, current + change);
+                    stat.textContent = newValue;
+                }
+            });
+        }, 30000);
     </script>
 </body>
 </html> 
