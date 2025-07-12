@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Tenant Platform - All Applications</title>
+    <link rel="stylesheet" href="/shared/styles/common.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .app-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .app-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .app-description {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .app-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .app-link:hover {
+            background: linear-gradient(45deg, #45a049, #4CAF50);
+            transform: scale(1.05);
+        }
+        
+        .status-bar {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .status-item {
+            display: inline-block;
+            margin: 0 15px;
+            padding: 5px 15px;
+            background: rgba(76, 175, 80, 0.3);
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Multi-Tenant Platform</h1>
+            <p>Complete Business Solutions - All in One Place</p>
+        </div>
+        
+        <div class="status-bar">
+            <span class="status-item">✅ Node.js Server Running</span>
+            <span class="status-item">✅ Python Backend Active</span>
+            <span class="status-item">✅ Redis Connected</span>
+            <span class="status-item">🌐 5 Applications Available</span>
+        </div>
+        
+        <div class="apps-grid">
+            <a class="app-card" href="/rent" target="_blank">
+                <span class="app-icon">🏠</span>
+                <div class="app-title">MornRent</div>
+                <div class="app-desc">Property Management</div>
+            </a>
+            <a class="app-card" href="/job" target="_blank">
+                <span class="app-icon">💼</span>
+                <div class="app-title">MornJob</div>
+                <div class="app-desc">Recruitment Platform</div>
+            </a>
+            <a class="app-card" href="/social" target="_blank">
+                <span class="app-icon">🌐</span>
+                <div class="app-title">MornSocial</div>
+                <div class="app-desc">Social Network</div>
+            </a>
+            <a class="app-card" href="/deepfake-detector" target="_blank">
+                <span class="app-icon">🤖</span>
+                <div class="app-title">Deepfake Detector</div>
+                <div class="app-desc">AI Security</div>
+            </a>
+            <a class="app-card" href="/accelerator" target="_blank">
+                <span class="app-icon">⚡</span>
+                <div class="app-title">Accelerator</div>
+                <div class="app-desc">USA to China Access</div>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p><strong>🔑 Default Login Credentials:</strong> admin / password123</p>
+            <p><strong>📊 System Health:</strong> <a href="/health" style="color: #4CAF50;">Check Status</a></p>
+            <p><strong>🔧 Backend API:</strong> <a href="http://localhost:8000/docs" style="color: #4CAF50;">API Documentation</a></p>
+        </div>
+    </div>
+    
+    <script src="/shared/scripts/utils.js"></script>
+    <script>
+        // Add some interactivity
+        document.querySelectorAll('.app-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-5px)';
+                }, 150);
+            });
+        });
+        
+        // Remove all JS related to loading/fetching products and dynamic rendering.
+    </script>
+</body>
+</html> 
