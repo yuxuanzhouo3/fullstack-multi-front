@@ -44,7 +44,7 @@ export default async function handler(req, res) {
   if (subdomain === 'rent') productDir = '1_rent';
   else if (subdomain === 'job') productDir = '2_job';
   else if (subdomain === 'social') productDir = '3_social';
-  else if (subdomain === 'deepfake_detector') productDir = '4_deepfake_detector';
+  else if (subdomain === 'deepfake-detector') productDir = '4_deepfake_detector';
   else if (subdomain === 'accelerator') productDir = '5_accelerator';
   else if (/^product-\d+$/.test(subdomain)) productDir = subdomain; // e.g., product-1234
   else productDir = subdomain; // fallback for any other custom product
