@@ -388,22 +388,36 @@
             }
         ];
 
-        // Get current domain for dynamic URL generation
-        function getCurrentDomain() {
+        // Get current root domain for subdomain link generation
+        function getRootDomain() {
             const hostname = window.location.hostname;
+            // Remove subdomain if present
+            const parts = hostname.split('.');
             if (hostname === 'localhost' || hostname === '127.0.0.1') {
                 return 'localhost:3000';
             }
-            return hostname.replace('www.', '');
+            if (parts.length > 2) {
+                // e.g. rent.mornhub.net -> mornhub.net
+                return parts.slice(-2).join('.');
+            }
+            return hostname;
         }
 
-        // Generate product URL
+        // Generate product URL for correct subdomain
         function getProductUrl(product) {
-            const domain = getCurrentDomain();
-            if (domain === 'localhost:3000') {
-                return `http://${product.subdomain}.${domain}`;
+            const rootDomain = getRootDomain();
+            if (rootDomain === 'localhost:3000') {
+                return `http://${product.subdomain}.localhost:3000`;
             }
-            return `https://${product.subdomain}.${domain}`;
+            return `https://${product.subdomain}.${rootDomain}`;
+        }
+
+        // Only show dashboard on root domain
+        function isRootDomain() {
+            const hostname = window.location.hostname;
+            if (hostname === 'localhost' || hostname === '127.0.0.1') return true;
+            const parts = hostname.split('.');
+            return parts.length <= 2 || hostname.startsWith('www.');
         }
 
         // Update statistics
@@ -416,7 +430,7 @@
             document.getElementById('active-products').textContent = activeProducts;
             document.getElementById('categories-count').textContent = categories;
             document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
-            document.getElementById('server-info').textContent = getCurrentDomain();
+            document.getElementById('server-info').textContent = getRootDomain();
         }
 
         // Generate category filters
@@ -434,7 +448,10 @@
         // Render products
         function renderProducts(filteredProducts = products) {
             const container = document.getElementById('productsContainer');
-            
+            if (!isRootDomain()) {
+                container.innerHTML = `<div class="no-results"><h3>This dashboard is only available on the main domain.</h3><p><a href="https://${getRootDomain()}" style="color:#667eea;">Go to main dashboard</a></p></div>`;
+                return;
+            }
             if (filteredProducts.length === 0) {
                 container.innerHTML = `
                     <div class="no-results">
@@ -457,7 +474,7 @@
                     <div class="product-description">${product.description}</div>
                     <div class="product-meta">
                         <span>Status: <strong style="color: #4CAF50;">${product.status}</strong></span>
-                        <span class="product-url">${product.subdomain}.${getCurrentDomain().replace('localhost:3000', 'localhost:3000')}</span>
+                        <span class="product-url">${product.subdomain}.${getRootDomain()}</span>
                     </div>
                     <a href="${getProductUrl(product)}" class="access-btn" target="_blank">
                         Access ${product.displayName} →
