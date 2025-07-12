@@ -11,11 +11,11 @@
           "apps/2_job/index.html",
           "apps/3_social/index.html",
           "apps/4_deepfake_detector/index.html",
-          "apps/5_vpn/index.html",
-          "apps/status/dist/index.html"
+          "apps/5_vpn/index.html"
         ]
       }
-    }
+    },
+    { "src": "apps/status/dist/index.html", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1.js" },
