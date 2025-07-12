@@ -179,6 +179,56 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
+// Register endpoint
+app.post('/api/auth/register', async (req, res) => {
+  const { username, password, productId } = req.body;
+  if (!username || !password || !productId) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+  // In a real app, you'd check if user exists and hash password
+  const hashedPassword = await bcrypt.hash(password, 10);
+  // Store user in Redis for demo (use DB in production)
+  await redis.set(`user:${username}`, JSON.stringify({ username, hashedPassword, productId }));
+  res.json({ success: true, message: 'User registered' });
+});
+
+// Payment endpoint (mock)
+app.post('/api/payment/charge', async (req, res) => {
+  const { amount } = req.body;
+  if (!amount || isNaN(amount)) {
+    return res.status(400).json({ error: 'Invalid amount' });
+  }
+  // Simulate payment processing
+  res.json({ success: true, message: `Charged $${amount}` });
+});
+
+// Chat endpoints
+app.post('/api/chat/send', async (req, res) => {
+  const { message, username } = req.body;
+  if (!message || !username) {
+    return res.status(400).json({ error: 'Missing message or username' });
+  }
+  // Store message in Redis list
+  await redis.rpush('chat:messages', JSON.stringify({ username, message, time: Date.now() }));
+  res.json({ success: true, message });
+});
+
+app.get('/api/chat/history', async (req, res) => {
+  const messages = await redis.lrange('chat:messages', 0, 49);
+  res.json({ success: true, messages: messages.map(m => JSON.parse(m)) });
+});
+
+// Analytics endpoint (Supabase example)
+app.get('/api/analytics/get', async (req, res) => {
+  try {
+    const { data, error } = await supabase.from('analytics').select('*').limit(10);
+    if (error) throw error;
+    res.json({ success: true, analytics: data });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Product-specific routes
 app.get('/api/:productId/config', authenticateUser, checkProductAccess, (req, res) => {
   const { productId } = req.params;
