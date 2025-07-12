@@ -2,24 +2,467 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>MornJob - Recruitment Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MornJob - Advanced Recruitment & Job Application Platform</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #e3f2fd; color: #222; margin: 0; padding: 40px; }
-    .container { max-width: 600px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #ccc; padding: 32px; }
-    h1 { color: #1565c0; }
-    .desc { margin: 24px 0; font-size: 1.2em; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 0;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #1565c0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #1565c0;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: #1565c0;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(21, 101, 192, 0.3);
+    }
+
+    .cta-button:hover {
+      background: #0d47a1;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(21, 101, 192, 0.4);
+    }
+
+    .features {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      color: #1565c0;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .feature-card p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .demo-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .demo-credentials {
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      padding: 2rem;
+      border-radius: 15px;
+      max-width: 500px;
+      margin: 2rem auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .demo-credentials h3 {
+      color: #1565c0;
+      margin-bottom: 1rem;
+    }
+
+    .credential-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .credential-item:last-child {
+      border-bottom: none;
+    }
+
+    .copy-btn {
+      background: #1565c0;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: background 0.3s;
+    }
+
+    .copy-btn:hover {
+      background: #0d47a1;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      color: white;
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .job-categories {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 4rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 2rem auto;
+    }
+
+    .category-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s;
+    }
+
+    .category-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .category-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer {
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .nav {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-links {
+        gap: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>💼 Welcome to MornJob!</h1>
-    <div class="desc">Recruitment & Job Application Platform</div>
-    <ul>
-      <li>📝 Job Postings</li>
-      <li>👤 Applicant Tracking</li>
-      <li>🤝 Recruitment Management</li>
-    </ul>
-    <p><strong>Demo Credentials:</strong> admin / password123</p>
-  </div>
+  <header class="header">
+    <nav class="nav">
+      <div class="logo">💼 MornJob</div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>💼 MornJob</h1>
+    <p>Advanced Recruitment & Job Application Platform</p>
+    <p>Connect top talent with amazing opportunities</p>
+    <a href="#demo" class="cta-button">Try Demo Now</a>
+  </section>
+
+  <section class="stats">
+    <div class="stat-item">
+      <div class="stat-number">50K+</div>
+      <div class="stat-label">Active Jobs</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">100K+</div>
+      <div class="stat-label">Job Seekers</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">10K+</div>
+      <div class="stat-label">Companies</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">95%</div>
+      <div class="stat-label">Success Rate</div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="feature-card">
+      <div class="feature-icon">📝</div>
+      <h3>Job Postings</h3>
+      <p>Create detailed job postings with requirements, benefits, and company information. Advanced filtering and search capabilities for better candidate matching.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👤</div>
+      <h3>Applicant Tracking</h3>
+      <p>Comprehensive applicant management system with resume parsing, skill matching, interview scheduling, and candidate evaluation tools.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤝</div>
+      <h3>Recruitment Management</h3>
+      <p>Streamlined hiring process with automated workflows, team collaboration tools, and performance analytics for better hiring decisions.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>AI Matching</h3>
+      <p>Advanced AI algorithms that match candidates to job requirements based on skills, experience, and cultural fit for optimal placements.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Analytics Dashboard</h3>
+      <p>Real-time insights into hiring metrics, candidate pipeline, time-to-hire, and recruitment performance with actionable recommendations.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3>Mobile App</h3>
+      <p>Full mobile access for job seekers and recruiters. Apply to jobs, schedule interviews, and manage applications on the go.</p>
+    </div>
+  </section>
+
+  <section class="job-categories" id="categories">
+    <h2>Popular Job Categories</h2>
+    <p>Find opportunities in your field</p>
+    
+    <div class="categories-grid">
+      <div class="category-item">
+        <div class="category-icon">💻</div>
+        <h3>Technology</h3>
+        <p>Software, IT, Data Science</p>
+      </div>
+      <div class="category-item">
+        <div class="category-icon">🏥</div>
+        <h3>Healthcare</h3>
+        <p>Medical, Nursing, Research</p>
+      </div>
+      <div class="category-item">
+        <div class="category-icon">💰</div>
+        <h3>Finance</h3>
+        <p>Banking, Investment, Accounting</p>
+      </div>
+      <div class="category-item">
+        <div class="category-icon">🎨</div>
+        <h3>Creative</h3>
+        <p>Design, Marketing, Media</p>
+      </div>
+      <div class="category-item">
+        <div class="category-icon">🏭</div>
+        <h3>Manufacturing</h3>
+        <p>Engineering, Production, Quality</p>
+      </div>
+      <div class="category-item">
+        <div class="category-icon">📚</div>
+        <h3>Education</h3>
+        <p>Teaching, Training, Administration</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section" id="demo">
+    <h2>Try Our Demo</h2>
+    <p>Experience the full power of MornJob with our interactive demo</p>
+    
+    <div class="demo-credentials">
+      <h3>Demo Credentials</h3>
+      <div class="credential-item">
+        <span>Username:</span>
+        <div>
+          <span id="username">admin</span>
+          <button class="copy-btn" onclick="copyToClipboard('username')">Copy</button>
+        </div>
+      </div>
+      <div class="credential-item">
+        <span>Password:</span>
+        <div>
+          <span id="password">password123</span>
+          <button class="copy-btn" onclick="copyToClipboard('password')">Copy</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2024 MornJob. All rights reserved. | Advanced Recruitment Platform</p>
+  </footer>
+
+  <script>
+    function copyToClipboard(elementId) {
+      const element = document.getElementById(elementId);
+      const text = element.textContent;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        const button = element.nextElementSibling;
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.style.background = '#4caf50';
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.style.background = '#1565c0';
+        }, 2000);
+      });
+    }
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add some interactive animations
+    const featureCards = document.querySelectorAll('.feature-card');
+    const categoryItems = document.querySelectorAll('.category-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    });
+
+    featureCards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.6s, transform 0.6s';
+      observer.observe(card);
+    });
+
+    categoryItems.forEach(item => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(20px)';
+      item.style.transition = 'opacity 0.6s, transform 0.6s';
+      observer.observe(item);
+    });
+  </script>
 </body>
 </html> 
