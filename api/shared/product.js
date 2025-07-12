@@ -3,12 +3,8 @@ import path from 'path';
 
 export default async function handler(req, res) {
   const host = req.headers.host;
-  // Extract subdomain robustly (handles www and multi-level domains)
   const hostParts = host.split('.');
   let subdomain = hostParts.length > 2 ? hostParts[0] : null;
-
-  // Debug logging
-  console.log('[Product Handler] Host:', host, '| Subdomain:', subdomain);
 
   // Map subdomains to product folders
   const productMap = {
@@ -19,27 +15,37 @@ export default async function handler(req, res) {
     'accelerator': '5_vpn'
   };
 
-  const productFolder = subdomain ? productMap[subdomain] : null;
+  // Serve dashboard for root domain (no subdomain)
+  if (!subdomain) {
+    const dashboardPath = path.join(process.cwd(), 'apps', 'status', 'dist', 'index.html');
+    if (fs.existsSync(dashboardPath)) {
+      const html = fs.readFileSync(dashboardPath, 'utf8');
+      res.setHeader('Content-Type', 'text/html');
+      return res.status(200).send(html);
+    } else {
+      return res.status(404).json({ error: 'Dashboard not found', dashboardPath });
+    }
+  }
+
+  // Otherwise, serve the product page for the subdomain
+  const productFolder = productMap[subdomain];
+  const indexPath = productFolder ? path.join(process.cwd(), 'apps', productFolder, 'index.html') : null;
+  const fileExists = indexPath ? fs.existsSync(indexPath) : false;
 
   if (!productFolder) {
-    console.log('[Product Handler] No product folder found for subdomain:', subdomain);
-    return res.status(404).json({ error: 'Product not found' });
+    return res.status(404).json({ error: 'Product not found', host, subdomain });
   }
 
   try {
-    // Try to serve the product's index.html
-    const indexPath = path.join(process.cwd(), 'apps', productFolder, 'index.html');
-    console.log('[Product Handler] indexPath:', indexPath);
-    if (fs.existsSync(indexPath)) {
+    if (fileExists) {
       const html = fs.readFileSync(indexPath, 'utf8');
       res.setHeader('Content-Type', 'text/html');
       return res.status(200).send(html);
     } else {
-      console.log('[Product Handler] index.html not found for', productFolder);
-      return res.status(404).json({ error: 'Product frontend not found' });
+      return res.status(404).json({ error: 'Product frontend not found', indexPath });
     }
   } catch (error) {
     console.error('Error serving product:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: 'Internal server error', details: error.message });
   }
 } 
