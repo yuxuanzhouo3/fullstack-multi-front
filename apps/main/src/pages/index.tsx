@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import Link from "next/link";
 import styles from "@/styles/Home.module.css";
 
 const products = [
@@ -55,11 +55,7 @@ const products = [
   }
 ];
 
-type Product = typeof products[0];
-
 export default function Home() {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
   return (
     <div className={styles.container}>
       <Head>
@@ -84,9 +80,9 @@ export default function Home() {
             {/* Status Notice */}
             <div className={styles.statusNotice}>
               <h3>✅ All Products Working!</h3>
-              <p><strong>Main Domain Routes:</strong> All products are fully functional via <code>mornhub.net/{'{product}'}</code></p>
+              <p><strong>Main Domain Routes:</strong> All products are fully functional via <code>mornhub.net/&#123;product&#125;</code></p>
               <p><strong>Subdomain Status:</strong> Currently experiencing Vercel platform routing issues</p>
-              <p><strong>Recommended:</strong> Use the "Open App" buttons below for the best experience</p>
+              <p><strong>Recommended:</strong> Use the &quot;Open App&quot; buttons below for the best experience</p>
             </div>
           </div>
 
@@ -96,7 +92,6 @@ export default function Home() {
                 key={product.id} 
                 className={styles.productCard}
                 style={{ borderColor: product.color }}
-                onClick={() => setSelectedProduct(product)}
               >
                 <div 
                   className={styles.productIcon}
@@ -107,13 +102,13 @@ export default function Home() {
                 <h3 className={styles.productName}>{product.name}</h3>
                 <p className={styles.productDescription}>{product.description}</p>
                 <div className={styles.productLinks}>
-                  <a 
+                  <Link 
                     href={product.url} 
                     className={styles.productButton}
                     style={{ backgroundColor: product.color }}
                   >
                     ✅ Open App
-                  </a>
+                  </Link>
                   <a 
                     href={`https://${product.domain}`} 
                     className={styles.domainLink}
@@ -137,21 +132,21 @@ export default function Home() {
           <div className={styles.quickAccess}>
             <h3>🚀 Quick Access Links</h3>
             <div className={styles.quickLinks}>
-              <a href="/rent" className={styles.quickLink} style={{ backgroundColor: '#3B82F6' }}>
+              <Link href="/rent" className={styles.quickLink} style={{ backgroundColor: '#3B82F6' }}>
                 🏠 MornRent
-              </a>
-              <a href="/job" className={styles.quickLink} style={{ backgroundColor: '#10B981' }}>
+              </Link>
+              <Link href="/job" className={styles.quickLink} style={{ backgroundColor: '#10B981' }}>
                 💼 MornJob
-              </a>
-              <a href="/social" className={styles.quickLink} style={{ backgroundColor: '#8B5CF6' }}>
+              </Link>
+              <Link href="/social" className={styles.quickLink} style={{ backgroundColor: '#8B5CF6' }}>
                 👥 MornSocial
-              </a>
-              <a href="/deepfake" className={styles.quickLink} style={{ backgroundColor: '#EF4444' }}>
+              </Link>
+              <Link href="/deepfake" className={styles.quickLink} style={{ backgroundColor: '#EF4444' }}>
                 🔍 Deepfake Detector
-              </a>
-              <a href="/accelerator" className={styles.quickLink} style={{ backgroundColor: '#F59E0B' }}>
+              </Link>
+              <Link href="/accelerator" className={styles.quickLink} style={{ backgroundColor: '#F59E0B' }}>
                 🚀 Accelerator
-              </a>
+              </Link>
             </div>
           </div>
         </main>
