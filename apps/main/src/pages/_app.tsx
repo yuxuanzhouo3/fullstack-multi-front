@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
     if (subdomainMap[hostname] && window.location.pathname === '/') {
       // Redirect to the appropriate product page
-      window.location.href = `https://www.mornhub.net${subdomainMap[hostname]}`;
+      window.location.href = `https://mornhub.net${subdomainMap[hostname]}`;
       return null; // Don't render anything while redirecting
     }
   }
