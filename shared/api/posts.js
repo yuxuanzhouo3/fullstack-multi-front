@@ -1,4 +1,4 @@
-import { supabase } from '../shared/utils/supabase';
+import { supabase } from '../utils/supabase';
 
 export default async function handler(req, res) {
   const host = req.headers.host;

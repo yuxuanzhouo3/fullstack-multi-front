@@ -137,7 +137,7 @@ export default function Home() {
           <div className={styles.footerContent}>
             <p>&copy; 2024 MornHub. All rights reserved.</p>
             <div className={styles.footerLinks}>
-              <a href="/api/health">System Status</a>
+              <a href="/api/health" target="_blank" rel="noopener noreferrer">System Status</a>
               <a href="https://github.com/mornhub">GitHub</a>
               <a href="/contact">Contact</a>
             </div>
