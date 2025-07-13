@@ -15,9 +15,16 @@ export default function App({ Component, pageProps }: AppProps) {
       'accelerator.mornhub.net': '/accelerator'
     };
 
-    if (subdomainMap[hostname] && window.location.pathname === '/') {
-      // Redirect to the appropriate product page
-      window.location.href = `https://mornhub.net${subdomainMap[hostname]}`;
+    // Check if we're on a subdomain and should redirect
+    if (subdomainMap[hostname]) {
+      console.log(`Subdomain detected: ${hostname}, redirecting to ${subdomainMap[hostname]}`);
+      
+      // Always redirect subdomain users to the main domain product page
+      const targetUrl = `https://mornhub.net${subdomainMap[hostname]}`;
+      console.log(`Redirecting to: ${targetUrl}`);
+      
+      // Use replace to avoid back button issues
+      window.location.replace(targetUrl);
       return null; // Don't render anything while redirecting
     }
   }
