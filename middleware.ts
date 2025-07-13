@@ -8,8 +8,8 @@ export function middleware(req) {
   // Debug logging
   console.log('🔍 Middleware called:', { hostname, pathname, url: req.url });
 
-  // Handle subdomain routing - redirect to main domain product pages
-  if (hostname.includes('.mornhub.net')) {
+  // Handle subdomain routing - force redirect to main domain product pages
+  if (hostname.includes('.mornhub.net') && hostname !== 'mornhub.net' && hostname !== 'www.mornhub.net') {
     const subdomain = hostname.split('.')[0];
     
     // Map subdomains to their product routes
@@ -22,32 +22,40 @@ export function middleware(req) {
     };
 
     if (subdomain && subdomainMap[subdomain]) {
-      console.log('🚀 Redirecting subdomain:', subdomain, 'to:', subdomainMap[subdomain]);
+      console.log('🚀 FORCING subdomain redirect:', subdomain, 'to:', subdomainMap[subdomain]);
       
-      // Create redirect URL to main domain product page
-      let redirectUrl = `https://mornhub.net${subdomainMap[subdomain]}`;
+      // Create redirect URL with cache-busting parameters
+      const redirectUrl = new URL(subdomainMap[subdomain], 'https://mornhub.net');
+      redirectUrl.searchParams.set('from', subdomain);
+      redirectUrl.searchParams.set('t', Date.now().toString());
       
-      // Preserve query parameters
-      if (url.search) {
-        redirectUrl += url.search;
-      }
+      // Force redirect with cache-busting headers
+      const response = NextResponse.redirect(redirectUrl, 302);
+      response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      response.headers.set('Pragma', 'no-cache');
+      response.headers.set('Expires', '0');
+      response.headers.set('X-Subdomain-Redirect', subdomain);
       
-      // Force redirect to the main domain product page
-      return NextResponse.redirect(redirectUrl, 308);
+      return response;
     }
   }
 
-  // Handle main domain product routes
+  // Handle main domain product routes - ensure they serve correct content
   if (hostname === 'mornhub.net' || hostname === 'www.mornhub.net') {
     const productRoutes = ['/rent', '/job', '/social', '/deepfake', '/accelerator'];
+    
     if (productRoutes.includes(pathname)) {
-      console.log('✅ Main domain product route accessed:', pathname);
-      // Let the page handle itself
-      return NextResponse.next();
+      console.log('✅ Serving product route:', pathname);
+      
+      // Add headers to ensure correct content is served
+      const response = NextResponse.next();
+      response.headers.set('X-Product-Route', pathname);
+      response.headers.set('Cache-Control', 'public, max-age=3600');
+      
+      return response;
     }
   }
 
-  console.log('➡️ No redirect needed, continuing...');
   return NextResponse.next();
 }
 
