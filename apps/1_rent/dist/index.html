@@ -65,10 +65,10 @@
 
         .form-group input {
             width: 100%;
-            padding: 12px 16px;
+            padding: 12px 15px;
             border: 2px solid #e1e5e9;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 14px;
             transition: border-color 0.3s;
         }
 
@@ -79,28 +79,107 @@
 
         .login-btn {
             width: 100%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: #667eea;
             color: white;
             border: none;
-            padding: 14px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 8px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: background 0.3s;
         }
 
         .login-btn:hover {
-            transform: translateY(-2px);
+            background: #5a6fd8;
+        }
+
+        .form-links {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .form-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 10px;
+        }
+
+        .form-links a:hover {
+            text-decoration: underline;
+        }
+
+        .social-login {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .social-login p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .social-btn.google:hover {
+            border-color: #db4437;
+            color: #db4437;
+        }
+
+        .social-btn.facebook:hover {
+            border-color: #4267B2;
+            color: #4267B2;
+        }
+
+        .social-btn.linkedin:hover {
+            border-color: #0077b5;
+            color: #0077b5;
         }
 
         .demo-credentials {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
             margin-top: 20px;
-            font-size: 14px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 12px;
             color: #666;
+            text-align: center;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
         }
 
         /* Dashboard */
@@ -366,6 +445,8 @@
                 <h1>🏠 MornRent</h1>
                 <p>Property Management Dashboard</p>
             </div>
+            
+            <!-- Login Form -->
             <form id="loginForm">
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -376,11 +457,70 @@
                     <input type="password" id="password" required>
                 </div>
                 <button type="submit" class="login-btn">Sign In</button>
+                <div class="form-links">
+                    <a href="#" onclick="showSignup()">Create Account</a>
+                    <a href="#" onclick="showResetPassword()">Forgot Password?</a>
+                </div>
             </form>
+
+            <!-- Social Login -->
+            <div class="social-login">
+                <p>Or sign in with:</p>
+                <div class="social-buttons">
+                    <button onclick="socialLogin('google')" class="social-btn google">Google</button>
+                    <button onclick="socialLogin('facebook')" class="social-btn facebook">Facebook</button>
+                    <button onclick="socialLogin('linkedin')" class="social-btn linkedin">LinkedIn</button>
+                </div>
+            </div>
+
+            <!-- Signup Form -->
+            <form id="signupForm" style="display: none;">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <button type="submit" class="login-btn">Create Account</button>
+                <div class="form-links">
+                    <a href="#" onclick="showLogin()">Already have an account?</a>
+                </div>
+            </form>
+
+            <!-- 2FA Form -->
+            <form id="twoFactorForm" style="display: none;">
+                <div class="form-group">
+                    <label for="twoFactorCode">Verification Code</label>
+                    <input type="text" id="twoFactorCode" placeholder="Enter 6-digit code" maxlength="6" required>
+                </div>
+                <button type="submit" class="login-btn">Verify</button>
+                <div class="form-links">
+                    <a href="#" onclick="resend2FACode()">Resend Code</a>
+                </div>
+            </form>
+
+            <!-- Reset Password Form -->
+            <form id="resetPasswordForm" style="display: none;">
+                <div class="form-group">
+                    <label for="resetEmail">Email</label>
+                    <input type="email" id="resetEmail" required>
+                </div>
+                <button type="submit" class="login-btn">Send Reset Link</button>
+                <div class="form-links">
+                    <a href="#" onclick="showLogin()">Back to Login</a>
+                </div>
+            </form>
+
             <div class="demo-credentials">
-                <strong>Demo Credentials:</strong><br>
-                Email: admin@mornrent.com<br>
-                Password: demo123
+                <strong>Test Account:</strong><br>
+                Email: yuxuanzhouo3@gmail.com<br>
+                Password: Zyx!213416
             </div>
         </div>
     </div>
@@ -561,31 +701,225 @@
     </div>
 
     <script>
-        // Login functionality
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        // Global variables for auth state
+        let currentEmail = '';
+        let currentPassword = '';
+        let pending2FA = false;
+
+        // Show/hide form functions
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('twoFactorForm').style.display = 'none';
+            document.getElementById('resetPasswordForm').style.display = 'none';
+            clearMessages();
+        }
+
+        function showSignup() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('twoFactorForm').style.display = 'none';
+            document.getElementById('resetPasswordForm').style.display = 'none';
+            clearMessages();
+        }
+
+        function show2FA() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('twoFactorForm').style.display = 'block';
+            document.getElementById('resetPasswordForm').style.display = 'none';
+            clearMessages();
+        }
+
+        function showResetPassword() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('twoFactorForm').style.display = 'none';
+            document.getElementById('resetPasswordForm').style.display = 'block';
+            clearMessages();
+        }
+
+        function clearMessages() {
+            const messages = document.querySelectorAll('.error-message, .success-message');
+            messages.forEach(msg => msg.remove());
+        }
+
+        function showMessage(message, type = 'error') {
+            clearMessages();
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type === 'error' ? 'error-message' : 'success-message';
+            messageDiv.textContent = message;
+            
+            const loginCard = document.querySelector('.login-card');
+            loginCard.insertBefore(messageDiv, loginCard.firstChild);
+        }
+
+        // API call function
+        async function callAuthAPI(data) {
+            try {
+                const response = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                return { success: response.ok, data: result };
+            } catch (error) {
+                console.error('API Error:', error);
+                return { success: false, data: { error: 'Network error' } };
+            }
+        }
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            // Demo login validation
-            if (email === 'admin@mornrent.com' && password === 'demo123') {
-                login();
+            currentEmail = email;
+            currentPassword = password;
+
+            const result = await callAuthAPI({
+                action: 'login',
+                email: email,
+                password: password
+            });
+
+            if (result.success && result.data.requires2FA) {
+                // Initiate 2FA
+                const twoFAResult = await callAuthAPI({
+                    action: '2fa-init',
+                    email: email,
+                    method: 'email'
+                });
+
+                if (twoFAResult.success) {
+                    showMessage('Verification code sent to your email', 'success');
+                    show2FA();
+                } else {
+                    showMessage(twoFAResult.data.error || 'Failed to send 2FA code');
+                }
+            } else if (result.success) {
+                showMessage('Login successful!', 'success');
+                setTimeout(() => login(), 1000);
             } else {
-                alert('Invalid credentials. Use demo credentials provided.');
+                showMessage(result.data.error || 'Login failed');
             }
         });
 
+        // Signup form handler
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+
+            const result = await callAuthAPI({
+                action: 'signup',
+                name: name,
+                email: email,
+                password: password
+            });
+
+            if (result.success) {
+                showMessage('Account created successfully! Please check your email to verify.', 'success');
+                setTimeout(() => showLogin(), 2000);
+            } else {
+                showMessage(result.data.error || 'Signup failed');
+            }
+        });
+
+        // 2FA form handler
+        document.getElementById('twoFactorForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const code = document.getElementById('twoFactorCode').value;
+
+            const result = await callAuthAPI({
+                action: '2fa-verify',
+                email: currentEmail,
+                password: currentPassword,
+                code: code
+            });
+
+            if (result.success) {
+                showMessage('2FA verified successfully!', 'success');
+                setTimeout(() => login(), 1000);
+            } else {
+                showMessage(result.data.error || 'Invalid verification code');
+            }
+        });
+
+        // Reset password form handler
+        document.getElementById('resetPasswordForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value;
+
+            const result = await callAuthAPI({
+                action: 'reset-init',
+                email: email
+            });
+
+            if (result.success) {
+                showMessage('Password reset link sent to your email', 'success');
+                setTimeout(() => showLogin(), 2000);
+            } else {
+                showMessage(result.data.error || 'Failed to send reset link');
+            }
+        });
+
+        // Social login handler
+        async function socialLogin(provider) {
+            const result = await callAuthAPI({
+                action: 'social',
+                provider: provider
+            });
+
+            if (result.success && result.data.url) {
+                window.location.href = result.data.url;
+            } else {
+                showMessage(result.data.error || 'Social login failed');
+            }
+        }
+
+        // Resend 2FA code
+        async function resend2FACode() {
+            const result = await callAuthAPI({
+                action: '2fa-init',
+                email: currentEmail,
+                method: 'email'
+            });
+
+            if (result.success) {
+                showMessage('New verification code sent to your email', 'success');
+            } else {
+                showMessage(result.data.error || 'Failed to resend code');
+            }
+        }
+
+        // Dashboard functions
         function login() {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
             localStorage.setItem('mornrent_logged_in', 'true');
+            localStorage.setItem('mornrent_user_email', currentEmail);
         }
 
         function logout() {
             document.getElementById('loginScreen').style.display = 'flex';
             document.getElementById('dashboard').style.display = 'none';
             localStorage.removeItem('mornrent_logged_in');
+            localStorage.removeItem('mornrent_user_email');
             document.getElementById('loginForm').reset();
+            document.getElementById('signupForm').reset();
+            document.getElementById('twoFactorForm').reset();
+            document.getElementById('resetPasswordForm').reset();
+            currentEmail = '';
+            currentPassword = '';
+            pending2FA = false;
+            showLogin();
         }
 
         // Check if already logged in
