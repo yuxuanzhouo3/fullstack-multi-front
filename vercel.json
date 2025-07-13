@@ -8,6 +8,33 @@
       "maxDuration": 30
     }
   },
+  "redirects": [
+    {
+      "source": "https://rent.mornhub.net",
+      "destination": "https://www.mornhub.net/rent",
+      "permanent": false
+    },
+    {
+      "source": "https://job.mornhub.net",
+      "destination": "https://www.mornhub.net/job",
+      "permanent": false
+    },
+    {
+      "source": "https://social.mornhub.net",
+      "destination": "https://www.mornhub.net/social",
+      "permanent": false
+    },
+    {
+      "source": "https://deepfake.mornhub.net",
+      "destination": "https://www.mornhub.net/deepfake",
+      "permanent": false
+    },
+    {
+      "source": "https://accelerator.mornhub.net",
+      "destination": "https://www.mornhub.net/accelerator",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/rent",
