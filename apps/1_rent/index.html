@@ -406,6 +406,133 @@
                 }, 150);
             });
         });
+
+        // Authentication functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.querySelector('#auth .form-row > div:first-child');
+            const registerForm = document.querySelector('#auth .form-row > div:last-child');
+            
+            // Login functionality
+            const loginButton = loginForm.querySelector('.btn');
+            const loginEmail = loginForm.querySelector('input[type="email"]');
+            const loginPassword = loginForm.querySelector('input[type="password"]');
+            
+            loginButton.addEventListener('click', async function() {
+                const email = loginEmail.value.trim();
+                const password = loginPassword.value.trim();
+                
+                if (!email || !password) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                try {
+                    loginButton.textContent = 'Logging in...';
+                    loginButton.disabled = true;
+                    
+                    const response = await fetch('/api/auth', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'login',
+                            email: email,
+                            password: password
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        alert('Login successful! Welcome to RentHub');
+                        // Store user session
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        localStorage.setItem('session', JSON.stringify(data.session));
+                        // Redirect or update UI
+                        window.location.href = '#features';
+                    } else {
+                        alert('Login failed: ' + (data.error || 'Unknown error'));
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    alert('Login failed. Please try again.');
+                } finally {
+                    loginButton.textContent = 'Login';
+                    loginButton.disabled = false;
+                }
+            });
+            
+            // Register functionality
+            const registerButton = registerForm.querySelector('.btn');
+            const registerName = registerForm.querySelector('input[type="text"]');
+            const registerEmail = registerForm.querySelector('input[type="email"]');
+            const registerPassword = registerForm.querySelector('input[type="password"]');
+            
+            registerButton.addEventListener('click', async function() {
+                const name = registerName.value.trim();
+                const email = registerEmail.value.trim();
+                const password = registerPassword.value.trim();
+                
+                if (!name || !email || !password) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    alert('Password must be at least 6 characters long');
+                    return;
+                }
+                
+                try {
+                    registerButton.textContent = 'Registering...';
+                    registerButton.disabled = true;
+                    
+                    const response = await fetch('/api/auth', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'signup',
+                            email: email,
+                            password: password,
+                            name: name
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        alert('Registration successful! Welcome to RentHub');
+                        // Store user session
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        // Clear form
+                        registerName.value = '';
+                        registerEmail.value = '';
+                        registerPassword.value = '';
+                        // Redirect or update UI
+                        window.location.href = '#features';
+                    } else {
+                        alert('Registration failed: ' + (data.error || 'Unknown error'));
+                    }
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    alert('Registration failed. Please try again.');
+                } finally {
+                    registerButton.textContent = 'Register';
+                    registerButton.disabled = false;
+                }
+            });
+            
+            // Check if user is already logged in
+            const user = localStorage.getItem('user');
+            if (user) {
+                const userData = JSON.parse(user);
+                console.log('User already logged in:', userData.email);
+                // You can update the UI to show logged-in state
+            }
+        });
     </script>
 </body>
 </html> 
