@@ -1,0 +1,135 @@
+{
+  "title": "🌐 真实Ping测试报告",
+  "timestamp": "2025-07-13T16:27:05.390Z",
+  "summary": {
+    "totalTests": 5,
+    "successfulTests": 5,
+    "failedTests": 0,
+    "averageLatency": 0.0991,
+    "averagePacketLoss": 0,
+    "successRate": 100
+  },
+  "detailed": [
+    {
+      "domain": "rent.mornscience.com",
+      "success": true,
+      "avgLatency": 0.09075,
+      "pings": [
+        {
+          "latency": 0.043,
+          "timestamp": "2025-07-13T16:27:08.416Z"
+        },
+        {
+          "latency": 0.111,
+          "timestamp": "2025-07-13T16:27:08.416Z"
+        },
+        {
+          "latency": 0.108,
+          "timestamp": "2025-07-13T16:27:08.416Z"
+        },
+        {
+          "latency": 0.101,
+          "timestamp": "2025-07-13T16:27:08.416Z"
+        }
+      ],
+      "packetLoss": 0
+    },
+    {
+      "domain": "job.mornscience.com",
+      "success": true,
+      "avgLatency": 0.10750000000000001,
+      "pings": [
+        {
+          "latency": 0.067,
+          "timestamp": "2025-07-13T16:27:11.438Z"
+        },
+        {
+          "latency": 0.08,
+          "timestamp": "2025-07-13T16:27:11.438Z"
+        },
+        {
+          "latency": 0.154,
+          "timestamp": "2025-07-13T16:27:11.438Z"
+        },
+        {
+          "latency": 0.129,
+          "timestamp": "2025-07-13T16:27:11.438Z"
+        }
+      ],
+      "packetLoss": 0
+    },
+    {
+      "domain": "social.mornscience.com",
+      "success": true,
+      "avgLatency": 0.1,
+      "pings": [
+        {
+          "latency": 0.054,
+          "timestamp": "2025-07-13T16:27:14.465Z"
+        },
+        {
+          "latency": 0.139,
+          "timestamp": "2025-07-13T16:27:14.465Z"
+        },
+        {
+          "latency": 0.1,
+          "timestamp": "2025-07-13T16:27:14.465Z"
+        },
+        {
+          "latency": 0.107,
+          "timestamp": "2025-07-13T16:27:14.465Z"
+        }
+      ],
+      "packetLoss": 0
+    },
+    {
+      "domain": "deepfake-detector.mornscience.com",
+      "success": true,
+      "avgLatency": 0.10649999999999998,
+      "pings": [
+        {
+          "latency": 0.048,
+          "timestamp": "2025-07-13T16:27:17.491Z"
+        },
+        {
+          "latency": 0.121,
+          "timestamp": "2025-07-13T16:27:17.491Z"
+        },
+        {
+          "latency": 0.112,
+          "timestamp": "2025-07-13T16:27:17.491Z"
+        },
+        {
+          "latency": 0.145,
+          "timestamp": "2025-07-13T16:27:17.491Z"
+        }
+      ],
+      "packetLoss": 0
+    },
+    {
+      "domain": "accelerator.mornscience.com",
+      "success": true,
+      "avgLatency": 0.09075,
+      "pings": [
+        {
+          "latency": 0.104,
+          "timestamp": "2025-07-13T16:27:20.517Z"
+        },
+        {
+          "latency": 0.112,
+          "timestamp": "2025-07-13T16:27:20.517Z"
+        },
+        {
+          "latency": 0.081,
+          "timestamp": "2025-07-13T16:27:20.517Z"
+        },
+        {
+          "latency": 0.066,
+          "timestamp": "2025-07-13T16:27:20.517Z"
+        }
+      ],
+      "packetLoss": 0
+    }
+  ],
+  "recommendations": []
+}

@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MornRent Dashboard - Property Management Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Login Screen */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .form-links {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .form-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 10px;
+        }
+
+        .form-links a:hover {
+            text-decoration: underline;
+        }
+
+        .social-login {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .social-login p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .social-btn.google:hover {
+            border-color: #db4437;
+            color: #db4437;
+        }
+
+        .social-btn.facebook:hover {
+            border-color: #4267B2;
+            color: #4267B2;
+        }
+
+        .social-btn.linkedin:hover {
+            border-color: #0077b5;
+            color: #0077b5;
+        }
+
+        .demo-credentials {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-header h2 {
+            color: #667eea;
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #f8f9fa;
+            color: #667eea;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .add-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .property-card {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .property-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .property-info {
+            padding: 20px;
+        }
+
+        .property-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .property-details {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .property-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .property-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+
+        .view-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .edit-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>🏠 MornRent</h1>
+                <p>Property Management Dashboard</p>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+                <div class="form-links">
+                    <a href="#" onclick="showSignup()">Create Account</a>
+                    <a href="#" onclick="showResetPassword()">Forgot Password?</a>
+                </div>
+            </form>
+
+            <!-- Social Login -->
+            <div class="social-login">
+                <p>Or sign in with:</p>
+                <div class="social-buttons">
+                    <button onclick="socialLogin('google')" class="social-btn google">Google</button>
+                    <button onclick="socialLogin('facebook')" class="social-btn facebook">Facebook</button>
+                    <button onclick="socialLogin('linkedin')" class="social-btn linkedin">LinkedIn</button>
+                </div>
+            </div>
+
+            <!-- Signup Form -->
+            <form id="signupForm" style="display: none;">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <button type="submit" class="login-btn">Create Account</button>
+                <div class="form-links">
+                    <a href="#" onclick="showLogin()">Already have an account?</a>
+                </div>
+            </form>
+
+            <!-- 2FA Form -->
+            <form id="twoFactorForm" style="display: none;">
+                <div class="form-group">
+                    <label for="twoFactorCode">Verification Code</label>
+                    <input type="text" id="twoFactorCode" placeholder="Enter 6-digit code" maxlength="6" required>
+                </div>
+                <button type="submit" class="login-btn">Verify</button>
+                <div class="form-links">
+                    <a href="#" onclick="resend2FACode()">Resend Code</a>
+                </div>
+            </form>
+
+            <!-- Reset Password Form -->
+            <form id="resetPasswordForm" style="display: none;">
+                <div class="form-group">
+                    <label for="resetEmail">Email</label>
+                    <input type="email" id="resetEmail" required>
+                </div>
+                <button type="submit" class="login-btn">Send Reset Link</button>
+                <div class="form-links">
+                    <a href="#" onclick="showLogin()">Back to Login</a>
+                </div>
+            </form>
+
+            <div class="demo-credentials">
+                <strong>Test Account:</strong><br>
+                Email: yuxuanzhouo3@gmail.com<br>
+                Password: Zyx!213416
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>🏠 MornRent</h2>
+            </div>
+            <div class="nav-menu">
+                <div class="nav-item active" data-section="overview">
+                    <i>📊</i> Overview
+                </div>
+                <div class="nav-item" data-section="properties">
+                    <i>🏘️</i> Properties
+                </div>
+                <div class="nav-item" data-section="tenants">
+                    <i>👥</i> Tenants
+                </div>
+                <div class="nav-item" data-section="payments">
+                    <i>💰</i> Payments
+                </div>
+                <div class="nav-item" data-section="maintenance">
+                    <i>🔧</i> Maintenance
+                </div>
+                <div class="nav-item" data-section="reports">
+                    <i>📈</i> Reports
+                </div>
+                <div class="nav-item" data-section="settings">
+                    <i>⚙️</i> Settings
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="user-info">
+                    <div class="user-avatar">JD</div>
+                    <div>
+                        <div style="font-weight: bold;">John Doe</div>
+                        <div style="font-size: 14px; color: #666;">Property Manager</div>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+
+            <!-- Overview Section -->
+            <div id="overview" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Dashboard Overview</h2>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Total Properties</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">18</div>
+                        <div class="stat-label">Occupied Units</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">$45,200</div>
+                        <div class="stat-label">Monthly Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Occupancy Rate</div>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h3 class="section-title">Recent Properties</h3>
+                    <button class="add-btn">Add Property</button>
+                </div>
+
+                <div class="properties-grid">
+                    <div class="property-card">
+                        <div class="property-image">🏠</div>
+                        <div class="property-info">
+                            <div class="property-title">Sunset Apartments #3A</div>
+                            <div class="property-details">2BR • 1BA • 1,200 sq ft</div>
+                            <div class="property-price">$2,400/month</div>
+                            <div class="property-actions">
+                                <button class="action-btn view-btn">View</button>
+                                <button class="action-btn edit-btn">Edit</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="property-card">
+                        <div class="property-image">🏠</div>
+                        <div class="property-info">
+                            <div class="property-title">Downtown Loft #12</div>
+                            <div class="property-details">1BR • 1BA • 800 sq ft</div>
+                            <div class="property-price">$1,800/month</div>
+                            <div class="property-actions">
+                                <button class="action-btn view-btn">View</button>
+                                <button class="action-btn edit-btn">Edit</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="property-card">
+                        <div class="property-image">🏠</div>
+                        <div class="property-info">
+                            <div class="property-title">Garden Villa #7</div>
+                            <div class="property-details">3BR • 2BA • 1,800 sq ft</div>
+                            <div class="property-price">$3,200/month</div>
+                            <div class="property-actions">
+                                <button class="action-btn view-btn">View</button>
+                                <button class="action-btn edit-btn">Edit</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Properties Section -->
+            <div id="properties" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Property Management</h2>
+                    <button class="add-btn">Add New Property</button>
+                </div>
+                <p>Property management features coming soon...</p>
+            </div>
+
+            <!-- Tenants Section -->
+            <div id="tenants" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Tenant Management</h2>
+                    <button class="add-btn">Add New Tenant</button>
+                </div>
+                <p>Tenant management features coming soon...</p>
+            </div>
+
+            <!-- Payments Section -->
+            <div id="payments" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Payment Tracking</h2>
+                    <button class="add-btn">Record Payment</button>
+                </div>
+                <p>Payment tracking features coming soon...</p>
+            </div>
+
+            <!-- Maintenance Section -->
+            <div id="maintenance" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Maintenance Requests</h2>
+                    <button class="add-btn">New Request</button>
+                </div>
+                <p>Maintenance management features coming soon...</p>
+            </div>
+
+            <!-- Reports Section -->
+            <div id="reports" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Reports & Analytics</h2>
+                </div>
+                <p>Reporting features coming soon...</p>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Account Settings</h2>
+                </div>
+                <p>Settings features coming soon...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables for auth state
+        let currentEmail = '';
+        let currentPassword = '';
+        let pending2FA = false;
+
+        // Show/hide form functions
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('twoFactorForm').style.display = 'none';
+            document.getElementById('resetPasswordForm').style.display = 'none';
+            clearMessages();
+        }
+
+        function showSignup() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('twoFactorForm').style.display = 'none';
+            document.getElementById('resetPasswordForm').style.display = 'none';
+            clearMessages();
+        }
+
+        function show2FA() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('twoFactorForm').style.display = 'block';
+            document.getElementById('resetPasswordForm').style.display = 'none';
+            clearMessages();
+        }
+
+        function showResetPassword() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('twoFactorForm').style.display = 'none';
+            document.getElementById('resetPasswordForm').style.display = 'block';
+            clearMessages();
+        }
+
+        function clearMessages() {
+            const messages = document.querySelectorAll('.error-message, .success-message');
+            messages.forEach(msg => msg.remove());
+        }
+
+        function showMessage(message, type = 'error') {
+            clearMessages();
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type === 'error' ? 'error-message' : 'success-message';
+            messageDiv.textContent = message;
+            
+            const loginCard = document.querySelector('.login-card');
+            loginCard.insertBefore(messageDiv, loginCard.firstChild);
+        }
+
+        // API call function
+        async function callAuthAPI(data) {
+            try {
+                const response = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                return { success: response.ok, data: result };
+            } catch (error) {
+                console.error('API Error:', error);
+                return { success: false, data: { error: 'Network error' } };
+            }
+        }
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            currentEmail = email;
+            currentPassword = password;
+
+            const result = await callAuthAPI({
+                action: 'login',
+                email: email,
+                password: password
+            });
+
+            if (result.success && result.data.requires2FA) {
+                // Initiate 2FA
+                const twoFAResult = await callAuthAPI({
+                    action: '2fa-init',
+                    email: email,
+                    method: 'email'
+                });
+
+                if (twoFAResult.success) {
+                    showMessage('Verification code sent to your email', 'success');
+                    show2FA();
+                } else {
+                    showMessage(twoFAResult.data.error || 'Failed to send 2FA code');
+                }
+            } else if (result.success) {
+                showMessage('Login successful!', 'success');
+                setTimeout(() => login(), 1000);
+            } else {
+                showMessage(result.data.error || 'Login failed');
+            }
+        });
+
+        // Signup form handler
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+
+            const result = await callAuthAPI({
+                action: 'signup',
+                name: name,
+                email: email,
+                password: password
+            });
+
+            if (result.success) {
+                showMessage('Account created successfully! Please check your email to verify.', 'success');
+                setTimeout(() => showLogin(), 2000);
+            } else {
+                showMessage(result.data.error || 'Signup failed');
+            }
+        });
+
+        // 2FA form handler
+        document.getElementById('twoFactorForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const code = document.getElementById('twoFactorCode').value;
+
+            const result = await callAuthAPI({
+                action: '2fa-verify',
+                email: currentEmail,
+                password: currentPassword,
+                code: code
+            });
+
+            if (result.success) {
+                showMessage('2FA verified successfully!', 'success');
+                setTimeout(() => login(), 1000);
+            } else {
+                showMessage(result.data.error || 'Invalid verification code');
+            }
+        });
+
+        // Reset password form handler
+        document.getElementById('resetPasswordForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value;
+
+            const result = await callAuthAPI({
+                action: 'reset-init',
+                email: email
+            });
+
+            if (result.success) {
+                showMessage('Password reset link sent to your email', 'success');
+                setTimeout(() => showLogin(), 2000);
+            } else {
+                showMessage(result.data.error || 'Failed to send reset link');
+            }
+        });
+
+        // Social login handler
+        async function socialLogin(provider) {
+            const result = await callAuthAPI({
+                action: 'social',
+                provider: provider
+            });
+
+            if (result.success && result.data.url) {
+                window.location.href = result.data.url;
+            } else {
+                showMessage(result.data.error || 'Social login failed');
+            }
+        }
+
+        // Resend 2FA code
+        async function resend2FACode() {
+            const result = await callAuthAPI({
+                action: '2fa-init',
+                email: currentEmail,
+                method: 'email'
+            });
+
+            if (result.success) {
+                showMessage('New verification code sent to your email', 'success');
+            } else {
+                showMessage(result.data.error || 'Failed to resend code');
+            }
+        }
+
+        // Dashboard functions
+        function login() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            localStorage.setItem('mornrent_logged_in', 'true');
+            localStorage.setItem('mornrent_user_email', currentEmail);
+        }
+
+        function logout() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
+            localStorage.removeItem('mornrent_logged_in');
+            localStorage.removeItem('mornrent_user_email');
+            document.getElementById('loginForm').reset();
+            document.getElementById('signupForm').reset();
+            document.getElementById('twoFactorForm').reset();
+            document.getElementById('resetPasswordForm').reset();
+            currentEmail = '';
+            currentPassword = '';
+            pending2FA = false;
+            showLogin();
+        }
+
+        // Check if already logged in
+        if (localStorage.getItem('mornrent_logged_in') === 'true') {
+            login();
+        }
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all nav items
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                // Add active class to clicked item
+                this.classList.add('active');
+
+                // Hide all sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+
+                // Show selected section
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).style.display = 'block';
+            });
+        });
+
+        // Auto-refresh stats every 30 seconds
+        setInterval(() => {
+            // Simulate real-time updates
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                if (stat.textContent.includes('$')) {
+                    const current = parseInt(stat.textContent.replace(/[$,]/g, ''));
+                    const change = Math.floor(Math.random() * 100) - 50;
+                    const newValue = Math.max(0, current + change);
+                    stat.textContent = '$' + newValue.toLocaleString();
+                }
+            });
+        }, 30000);
+    </script>
+</body>
+</html> 

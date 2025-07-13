@@ -1,0 +1,71 @@
+{
+  "timestamp": "2025-07-13T16:28:38.979Z",
+  "localResults": [
+    {
+      "domain": "rent.mornscience.com",
+      "success": true,
+      "avgLatency": 0.10949999999999999,
+      "pings": [
+        0.057,
+        0.141,
+        0.122,
+        0.118
+      ],
+      "packetLoss": 0
+    },
+    {
+      "domain": "job.mornscience.com",
+      "success": true,
+      "avgLatency": 0.10874999999999999,
+      "pings": [
+        0.052,
+        0.165,
+        0.122,
+        0.096
+      ],
+      "packetLoss": 0
+    },
+    {
+      "domain": "social.mornscience.com",
+      "success": true,
+      "avgLatency": 0.12525,
+      "pings": [
+        0.043,
+        0.143,
+        0.15,
+        0.165
+      ],
+      "packetLoss": 0
+    },
+    {
+      "domain": "deepfake-detector.mornscience.com",
+      "success": true,
+      "avgLatency": 0.1165,
+      "pings": [
+        0.064,
+        0.099,
+        0.165,
+        0.138
+      ],
+      "packetLoss": 0
+    },
+    {
+      "domain": "accelerator.mornscience.com",
+      "success": true,
+      "avgLatency": 0.10375000000000001,
+      "pings": [
+        0.081,
+        0.088,
+        0.101,
+        0.145
+      ],
+      "packetLoss": 0
+    }
+  ],
+  "summary": {
+    "totalTests": 5,
+    "successfulTests": 5,
+    "failedTests": 0,
+    "avgLatency": 0.11274999999999999
+  }
+}
