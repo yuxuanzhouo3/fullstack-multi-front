@@ -145,33 +145,31 @@ function getProductFromHost(req) {
   return parts.length > 2 ? parts[0] : 'main';
 }
 
-// Health check - must come before root route
-app.get('/health', (req, res) => {
-  console.log('HEALTH endpoint hit');
-  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+// Multi-tenant Register (Supabase)
+app.post('/api/auth/register', async (req, res) => {
+  const product = getProductFromHost(req);
+  const { username, password, email } = req.body;
+  if (!username || !password || !email) return res.status(400).json({ error: 'Missing fields' });
+  const hashedPassword = await bcrypt.hash(password, 10);
+  // Store in Supabase
+  const { data, error } = await supabase.from('users').insert([
+    { product, username, email, password_hash: hashedPassword }
+  ]);
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ success: true, message: 'User registered', product });
 });
 
-// API routes - must come before root route
+// Multi-tenant Login (Supabase)
 app.post('/api/auth/login', async (req, res) => {
   const product = getProductFromHost(req);
   const { username, password } = req.body;
   if (!username || !password) return res.status(400).json({ error: 'Missing fields' });
-  const userStr = await redis.get(`${product}:user:${username}`);
-  if (!userStr) return res.status(401).json({ error: 'User not found' });
-  const user = JSON.parse(userStr);
-  const valid = await bcrypt.compare(password, user.hashedPassword);
+  // Get user from Supabase
+  const { data, error } = await supabase.from('users').select('*').eq('product', product).eq('username', username).single();
+  if (error || !data) return res.status(401).json({ error: 'User not found' });
+  const valid = await bcrypt.compare(password, data.password_hash);
   if (!valid) return res.status(401).json({ error: 'Invalid password' });
   res.json({ success: true, message: 'Login successful', product });
-});
-
-// Multi-tenant Register
-app.post('/api/auth/register', async (req, res) => {
-  const product = getProductFromHost(req);
-  const { username, password } = req.body;
-  if (!username || !password) return res.status(400).json({ error: 'Missing fields' });
-  const hashedPassword = await bcrypt.hash(password, 10);
-  await redis.set(`${product}:user:${username}`, JSON.stringify({ username, hashedPassword }));
-  res.json({ success: true, message: 'User registered', product });
 });
 
 // Payment endpoint (mock)
