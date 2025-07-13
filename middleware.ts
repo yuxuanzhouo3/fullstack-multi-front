@@ -6,7 +6,7 @@ export function middleware(req) {
   const pathname = url.pathname;
 
   // Debug logging
-  console.log('Middleware called:', { hostname, pathname });
+  console.log('🔍 Middleware called:', { hostname, pathname, url: req.url });
 
   // Handle subdomain routing - be very aggressive
   if (hostname.includes('.mornhub.net')) {
@@ -22,11 +22,16 @@ export function middleware(req) {
     };
 
     if (subdomain && subdomainMap[subdomain]) {
-      console.log('Rewriting subdomain:', subdomain, 'to path:', subdomainMap[subdomain]);
+      console.log('🚀 Rewriting subdomain:', subdomain, 'to path:', subdomainMap[subdomain]);
+      
       // Force rewrite to the specific product route
       const newUrl = new URL(req.url);
       newUrl.pathname = subdomainMap[subdomain];
       newUrl.search = url.search;
+      
+      console.log('📝 Rewriting URL from:', req.url, 'to:', newUrl.toString());
+      
+      // Use rewrite instead of redirect to preserve the subdomain in the URL
       return NextResponse.rewrite(newUrl);
     }
   }
@@ -35,12 +40,13 @@ export function middleware(req) {
   if (hostname === 'mornhub.net' || hostname === 'www.mornhub.net') {
     const productRoutes = ['/rent', '/job', '/social', '/deepfake', '/accelerator'];
     if (productRoutes.includes(pathname)) {
-      console.log('Main domain product route accessed:', pathname);
+      console.log('✅ Main domain product route accessed:', pathname);
       // Let the page handle itself
       return NextResponse.next();
     }
   }
 
+  console.log('➡️ No rewrite needed, continuing...');
   return NextResponse.next();
 }
 

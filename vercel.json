@@ -7,5 +7,27 @@
     "apps/main/src/pages/**/*.tsx": {
       "maxDuration": 30
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/rent",
+      "destination": "/rent"
+    },
+    {
+      "source": "/job",
+      "destination": "/job"
+    },
+    {
+      "source": "/social",
+      "destination": "/social"
+    },
+    {
+      "source": "/deepfake",
+      "destination": "/deepfake"
+    },
+    {
+      "source": "/accelerator",
+      "destination": "/accelerator"
+    }
+  ]
 } 
