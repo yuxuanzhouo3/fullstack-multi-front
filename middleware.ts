@@ -8,8 +8,8 @@ export function middleware(req) {
   // Debug logging
   console.log('Middleware called:', { hostname, pathname });
 
-  // Handle subdomain routing
-  if (hostname.endsWith('.mornhub.net')) {
+  // Handle subdomain routing - be more aggressive
+  if (hostname.includes('.mornhub.net')) {
     const subdomain = hostname.split('.')[0];
     
     // Map subdomains to their product routes
@@ -23,9 +23,10 @@ export function middleware(req) {
 
     if (subdomain && subdomainMap[subdomain]) {
       console.log('Rewriting subdomain:', subdomain, 'to path:', subdomainMap[subdomain]);
-      // Rewrite to the specific product route
-      url.pathname = subdomainMap[subdomain];
-      return NextResponse.rewrite(url);
+      // Force rewrite to the specific product route
+      const newUrl = new URL(req.url);
+      newUrl.pathname = subdomainMap[subdomain];
+      return NextResponse.rewrite(newUrl);
     }
   }
 
