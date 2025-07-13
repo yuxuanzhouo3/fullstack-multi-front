@@ -138,6 +138,13 @@ function getProductSlugFromHost(host) {
   return dnsConfig[cleanHost];
 }
 
+// Helper to extract product/tenant from subdomain
+function getProductFromHost(req) {
+  const host = req.headers.host || '';
+  const parts = host.split('.');
+  return parts.length > 2 ? parts[0] : 'main';
+}
+
 // Health check - must come before root route
 app.get('/health', (req, res) => {
   console.log('HEALTH endpoint hit');
@@ -146,50 +153,25 @@ app.get('/health', (req, res) => {
 
 // API routes - must come before root route
 app.post('/api/auth/login', async (req, res) => {
-  const { username, password, productId } = req.body;
-  
-  if (!username || !password || !productId) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
-  
-  if (!PRODUCTS[productId]) {
-    return res.status(404).json({ error: 'Product not found' });
-  }
-  
-  // In a real app, you'd validate against a database
-  const hashedPassword = await bcrypt.hash('password123', 10);
-  const isValidPassword = await bcrypt.compare(password, hashedPassword);
-  
-  if (username === 'admin' && isValidPassword) {
-    const token = jwt.sign(
-      { id: uuidv4(), username, productId },
-      process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '24h' }
-    );
-    
-    // Store session
-    await redis.set(`session:${token}`, JSON.stringify({
-      currentProduct: productId,
-      loginTime: new Date().toISOString()
-    }));
-    
-    res.json({ token, product: PRODUCTS[productId] });
-  } else {
-    res.status(401).json({ error: 'Invalid credentials' });
-  }
+  const product = getProductFromHost(req);
+  const { username, password } = req.body;
+  if (!username || !password) return res.status(400).json({ error: 'Missing fields' });
+  const userStr = await redis.get(`${product}:user:${username}`);
+  if (!userStr) return res.status(401).json({ error: 'User not found' });
+  const user = JSON.parse(userStr);
+  const valid = await bcrypt.compare(password, user.hashedPassword);
+  if (!valid) return res.status(401).json({ error: 'Invalid password' });
+  res.json({ success: true, message: 'Login successful', product });
 });
 
-// Register endpoint
+// Multi-tenant Register
 app.post('/api/auth/register', async (req, res) => {
-  const { username, password, productId } = req.body;
-  if (!username || !password || !productId) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
-  // In a real app, you'd check if user exists and hash password
+  const product = getProductFromHost(req);
+  const { username, password } = req.body;
+  if (!username || !password) return res.status(400).json({ error: 'Missing fields' });
   const hashedPassword = await bcrypt.hash(password, 10);
-  // Store user in Redis for demo (use DB in production)
-  await redis.set(`user:${username}`, JSON.stringify({ username, hashedPassword, productId }));
-  res.json({ success: true, message: 'User registered' });
+  await redis.set(`${product}:user:${username}`, JSON.stringify({ username, hashedPassword }));
+  res.json({ success: true, message: 'User registered', product });
 });
 
 // Payment endpoint (mock)
