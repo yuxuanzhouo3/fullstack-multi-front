@@ -5,12 +5,26 @@ export function middleware(req) {
   const hostname = req.headers.get('host') || '';
   const pathname = url.pathname;
 
-  // Debug logging
-  console.log('🔍 Middleware called:', { hostname, pathname, url: req.url });
+  // Aggressive debug logging
+  console.log('🔍 MIDDLEWARE EXECUTED:', { 
+    hostname, 
+    pathname, 
+    url: req.url,
+    userAgent: req.headers.get('user-agent'),
+    timestamp: new Date().toISOString()
+  });
+
+  // Test if middleware is running at all
+  if (hostname.includes('test.mornhub.net')) {
+    console.log('🧪 TEST SUBDOMAIN DETECTED - Middleware is running!');
+    return NextResponse.redirect(new URL('https://mornhub.net', req.url), 302);
+  }
 
   // Handle subdomain routing - redirect to main domain product pages
   if (hostname.includes('.mornhub.net') && hostname !== 'mornhub.net' && hostname !== 'www.mornhub.net') {
     const subdomain = hostname.split('.')[0];
+    
+    console.log(`🎯 SUBDOMAIN DETECTED: ${subdomain}.mornhub.net`);
     
     // Map subdomains to their product pages
     const subdomainMap = {
@@ -24,18 +38,24 @@ export function middleware(req) {
     const targetPath = subdomainMap[subdomain];
     
     if (targetPath) {
+      console.log(`🎯 MAPPED SUBDOMAIN: ${subdomain} -> ${targetPath}`);
+      
       // For subdomain root path (/), redirect to the product page on main domain
       if (pathname === '/') {
-        console.log(`🔄 Subdomain redirect: ${subdomain}.mornhub.net/ -> mornhub.net${targetPath}`);
+        console.log(`🔄 SUBDOMAIN ROOT REDIRECT: ${subdomain}.mornhub.net/ -> mornhub.net${targetPath}`);
         const redirectUrl = new URL(targetPath, 'https://mornhub.net');
         return NextResponse.redirect(redirectUrl, 308); // Permanent redirect
       }
       
       // For other paths on subdomain, redirect to main domain with same path
-      console.log(`🔄 Subdomain path redirect: ${subdomain}.mornhub.net${pathname} -> mornhub.net${pathname}`);
+      console.log(`🔄 SUBDOMAIN PATH REDIRECT: ${subdomain}.mornhub.net${pathname} -> mornhub.net${pathname}`);
       const redirectUrl = new URL(pathname, 'https://mornhub.net');
       return NextResponse.redirect(redirectUrl, 308); // Permanent redirect
+    } else {
+      console.log(`❌ UNKNOWN SUBDOMAIN: ${subdomain} - no mapping found`);
     }
+  } else {
+    console.log(`✅ MAIN DOMAIN OR NON-SUBDOMAIN: ${hostname} - passing through`);
   }
 
   // Add cache-busting headers for subdomains
@@ -44,6 +64,7 @@ export function middleware(req) {
     response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     response.headers.set('Pragma', 'no-cache');
     response.headers.set('Expires', '0');
+    response.headers.set('X-Middleware-Cache', 'no-cache');
     return response;
   }
 
