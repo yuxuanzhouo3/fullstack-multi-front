@@ -24,27 +24,21 @@ export function middleware(req) {
     const targetPath = subdomainMap[subdomain];
     
     if (targetPath && pathname === '/') {
-      console.log(`🔄 Redirecting ${hostname} to ${targetPath}`);
+      console.log(`🔄 Redirecting ${subdomain}.mornhub.net to ${targetPath}`);
       return NextResponse.redirect(new URL(targetPath, req.url));
     }
   }
 
-  // Add debugging headers to all responses
-  const response = NextResponse.next();
-  response.headers.set('X-Middleware-Processed', 'true');
-  response.headers.set('X-Hostname', hostname);
-  response.headers.set('X-Pathname', pathname);
-  response.headers.set('X-Request-URL', req.url);
-  
-  // Add cache-busting for subdomains
+  // Add cache-busting headers for subdomains
   if (hostname.includes('.mornhub.net') && hostname !== 'mornhub.net' && hostname !== 'www.mornhub.net') {
-    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
+    const response = NextResponse.next();
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     response.headers.set('Pragma', 'no-cache');
     response.headers.set('Expires', '0');
-    response.headers.set('X-Subdomain', hostname.split('.')[0]);
+    return response;
   }
-  
-  return response;
+
+  return NextResponse.next();
 }
 
 export const config = {
