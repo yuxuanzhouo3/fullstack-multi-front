@@ -3,17 +3,13 @@
   "builds": [
     { "src": "api/*.js", "use": "@vercel/node" },
     {
-      "src": "api/shared/product.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "apps/**/*"
-        ]
-      }
+      "src": "apps/1_rent/next.config.js",
+      "use": "@vercel/next"
     }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1.js" },
-    { "src": "/(.*)", "dest": "/api/shared/product.js" }
+    { "src": "/rent(/.*)?", "dest": "/apps/1_rent$1" },
+    { "src": "/(.*)", "dest": "/apps/1_rent/$1", "host": "rent.mornhub.net" }
   ]
 } 
