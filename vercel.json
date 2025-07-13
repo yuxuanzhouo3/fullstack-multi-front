@@ -8,10 +8,10 @@
       "maxDuration": 30
     }
   },
-  "redirects": [
+  "rewrites": [
     {
-      "source": "/",
-      "destination": "/rent",
+      "source": "/(.*)",
+      "destination": "/rent/$1",
       "has": [
         {
           "type": "host",
@@ -20,8 +20,8 @@
       ]
     },
     {
-      "source": "/",
-      "destination": "/job",
+      "source": "/(.*)",
+      "destination": "/job/$1",
       "has": [
         {
           "type": "host",
@@ -30,8 +30,8 @@
       ]
     },
     {
-      "source": "/",
-      "destination": "/social",
+      "source": "/(.*)",
+      "destination": "/social/$1",
       "has": [
         {
           "type": "host",
@@ -40,8 +40,8 @@
       ]
     },
     {
-      "source": "/",
-      "destination": "/deepfake",
+      "source": "/(.*)",
+      "destination": "/deepfake/$1",
       "has": [
         {
           "type": "host",
@@ -50,8 +50,85 @@
       ]
     },
     {
-      "source": "/",
-      "destination": "/accelerator",
+      "source": "/(.*)",
+      "destination": "/accelerator/$1",
+      "has": [
+        {
+          "type": "host",
+          "value": "accelerator.mornhub.net"
+        }
+      ]
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ],
+      "has": [
+        {
+          "type": "host",
+          "value": "rent.mornhub.net"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ],
+      "has": [
+        {
+          "type": "host",
+          "value": "job.mornhub.net"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ],
+      "has": [
+        {
+          "type": "host",
+          "value": "social.mornhub.net"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ],
+      "has": [
+        {
+          "type": "host",
+          "value": "deepfake.mornhub.net"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ],
       "has": [
         {
           "type": "host",

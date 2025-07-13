@@ -8,6 +8,33 @@ export function middleware(req) {
   // Debug logging
   console.log('🔍 Middleware called:', { hostname, pathname, url: req.url });
 
+  // Handle subdomain routing - be very aggressive
+  if (hostname.includes('.mornhub.net')) {
+    const subdomain = hostname.split('.')[0];
+    
+    // Map subdomains to their product routes
+    const subdomainMap = {
+      'rent': '/rent',
+      'job': '/job', 
+      'social': '/social',
+      'deepfake': '/deepfake',
+      'accelerator': '/accelerator'
+    };
+
+    if (subdomain && subdomainMap[subdomain]) {
+      console.log('🚀 Rewriting subdomain:', subdomain, 'to:', subdomainMap[subdomain]);
+      
+      // Create new URL with the product route
+      const newUrl = new URL(subdomainMap[subdomain], req.url);
+      
+      // Preserve query parameters
+      newUrl.search = url.search;
+      
+      // Force rewrite to the product page
+      return NextResponse.rewrite(newUrl);
+    }
+  }
+
   // Handle main domain product routes
   if (hostname === 'mornhub.net' || hostname === 'www.mornhub.net') {
     const productRoutes = ['/rent', '/job', '/social', '/deepfake', '/accelerator'];
@@ -30,8 +57,7 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * - public folder
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 }; 
