@@ -8,10 +8,10 @@
       "maxDuration": 30
     }
   },
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/(.*)",
-      "destination": "/rent/$1",
+      "source": "/",
+      "destination": "/rent",
       "has": [
         {
           "type": "host",
@@ -20,8 +20,8 @@
       ]
     },
     {
-      "source": "/(.*)",
-      "destination": "/job/$1",
+      "source": "/",
+      "destination": "/job",
       "has": [
         {
           "type": "host",
@@ -30,8 +30,8 @@
       ]
     },
     {
-      "source": "/(.*)",
-      "destination": "/social/$1",
+      "source": "/",
+      "destination": "/social",
       "has": [
         {
           "type": "host",
@@ -40,8 +40,8 @@
       ]
     },
     {
-      "source": "/(.*)",
-      "destination": "/deepfake/$1",
+      "source": "/",
+      "destination": "/deepfake",
       "has": [
         {
           "type": "host",
@@ -50,8 +50,8 @@
       ]
     },
     {
-      "source": "/(.*)",
-      "destination": "/accelerator/$1",
+      "source": "/",
+      "destination": "/accelerator",
       "has": [
         {
           "type": "host",
