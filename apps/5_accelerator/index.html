@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accelerator - USA to China Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+        
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .hero {
+            max-width: 800px;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .footer {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">🚀 Accelerator</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main class="main">
+        <section class="hero">
+            <h1>USA to China Access Accelerator</h1>
+            <p>Bridge the gap between USA and China with our high-speed, reliable acceleration service. Experience seamless connectivity and optimized performance for your cross-border operations.</p>
+        </section>
+        
+        <section class="features">
+            <div class="feature-card">
+                <h3>🌐 Global Network</h3>
+                <p>Leverage our extensive network of optimized servers strategically placed between USA and China for maximum performance.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ Lightning Fast</h3>
+                <p>Experience up to 10x faster connection speeds with our advanced acceleration technology and smart routing algorithms.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔒 Secure & Reliable</h3>
+                <p>Enterprise-grade security with 99.9% uptime guarantee. Your data is protected with end-to-end encryption.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📊 Real-time Analytics</h3>
+                <p>Monitor your connection performance with detailed analytics and insights to optimize your operations.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🛠️ Easy Integration</h3>
+                <p>Simple API integration with comprehensive documentation and 24/7 technical support.</p>
+            </div>
+            <div class="feature-card">
+                <h3>💰 Cost Effective</h3>
+                <p>Reduce your operational costs while improving performance. Flexible pricing plans to suit your needs.</p>
+            </div>
+        </section>
+        
+        <a href="#get-started" class="cta-button">Get Started Today</a>
+    </main>
+    
+    <footer class="footer">
+        <p>&copy; 2024 Accelerator. All rights reserved. | USA to China Access Solution</p>
+    </footer>
+</body>
+</html> 

@@ -2,14 +2,25 @@
   "version": 2,
   "builds": [
     { "src": "api/*.js", "use": "@vercel/node" },
-    {
-      "src": "apps/1_rent/next.config.js",
-      "use": "@vercel/next"
-    }
+    { "src": "apps/1_rent/next.config.js", "use": "@vercel/next" },
+    { "src": "apps/main/next.config.ts", "use": "@vercel/next" },
+    { "src": "apps/2_job/index.html", "use": "@vercel/static" },
+    { "src": "apps/3_social/index.html", "use": "@vercel/static" },
+    { "src": "apps/4_deepfake_detector/index.html", "use": "@vercel/static" },
+    { "src": "apps/5_accelerator/index.html", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1.js" },
     { "src": "/rent(/.*)?", "dest": "/apps/1_rent$1" },
-    { "src": "/(.*)", "dest": "/apps/1_rent/$1", "host": "rent.mornhub.net" }
-  ]
+    { "src": "/job(/.*)?", "dest": "/apps/2_job$1" },
+    { "src": "/social(/.*)?", "dest": "/apps/3_social$1" },
+    { "src": "/deepfake-detector(/.*)?", "dest": "/apps/4_deepfake_detector$1" },
+    { "src": "/accelerator(/.*)?", "dest": "/apps/5_accelerator$1" },
+    { "src": "/(.*)", "dest": "/apps/main/$1" }
+  ],
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
 } 
