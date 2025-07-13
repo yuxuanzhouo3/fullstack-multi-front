@@ -8,7 +8,7 @@ export function middleware(req) {
   // Debug logging
   console.log('🔍 Middleware called:', { hostname, pathname, url: req.url });
 
-  // Handle subdomain routing - be very aggressive
+  // Handle subdomain routing - redirect to main domain product pages
   if (hostname.includes('.mornhub.net')) {
     const subdomain = hostname.split('.')[0];
     
@@ -22,16 +22,18 @@ export function middleware(req) {
     };
 
     if (subdomain && subdomainMap[subdomain]) {
-      console.log('🚀 Rewriting subdomain:', subdomain, 'to:', subdomainMap[subdomain]);
+      console.log('🚀 Redirecting subdomain:', subdomain, 'to:', subdomainMap[subdomain]);
       
-      // Create new URL with the product route
-      const newUrl = new URL(subdomainMap[subdomain], req.url);
+      // Create redirect URL to main domain product page
+      let redirectUrl = `https://mornhub.net${subdomainMap[subdomain]}`;
       
       // Preserve query parameters
-      newUrl.search = url.search;
+      if (url.search) {
+        redirectUrl += url.search;
+      }
       
-      // Force rewrite to the product page
-      return NextResponse.rewrite(newUrl);
+      // Force redirect to the main domain product page
+      return NextResponse.redirect(redirectUrl, 308);
     }
   }
 
@@ -45,7 +47,7 @@ export function middleware(req) {
     }
   }
 
-  console.log('➡️ No rewrite needed, continuing...');
+  console.log('➡️ No redirect needed, continuing...');
   return NextResponse.next();
 }
 
