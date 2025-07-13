@@ -2,42 +2,5 @@
   "buildCommand": "cd apps/main && npm run build",
   "outputDirectory": "apps/main/.next",
   "installCommand": "pnpm install",
-  "framework": "nextjs",
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "/rent",
-      "has": [
-        { "type": "host", "value": "rent.mornhub.net" }
-      ]
-    },
-    {
-      "source": "/",
-      "destination": "/job",
-      "has": [
-        { "type": "host", "value": "job.mornhub.net" }
-      ]
-    },
-    {
-      "source": "/",
-      "destination": "/social",
-      "has": [
-        { "type": "host", "value": "social.mornhub.net" }
-      ]
-    },
-    {
-      "source": "/",
-      "destination": "/deepfake",
-      "has": [
-        { "type": "host", "value": "deepfake.mornhub.net" }
-      ]
-    },
-    {
-      "source": "/",
-      "destination": "/accelerator",
-      "has": [
-        { "type": "host", "value": "accelerator.mornhub.net" }
-      ]
-    }
-  ]
+  "framework": "nextjs"
 } 
