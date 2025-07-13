@@ -10,6 +10,7 @@
     { "src": "apps/5_accelerator/index.html", "use": "@vercel/static" }
   ],
   "routes": [
+    { "src": "/api/health", "dest": "/api/system/health.js" },
     { "src": "/api/(.*)", "dest": "/api/$1.js" },
     { "src": "/rent(/.*)?", "dest": "/apps/1_rent$1" },
     { "src": "/job(/.*)?", "dest": "/apps/2_job$1" },
