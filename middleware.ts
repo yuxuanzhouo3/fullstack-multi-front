@@ -8,7 +8,7 @@ export function middleware(req) {
   // Debug logging
   console.log('🔍 Middleware called:', { hostname, pathname, url: req.url });
 
-  // Handle subdomain routing - ALWAYS redirect subdomains to their product pages
+  // Handle subdomain routing - only redirect if not already on the correct page
   if (hostname.includes('.mornhub.net') && hostname !== 'mornhub.net' && hostname !== 'www.mornhub.net') {
     const subdomain = hostname.split('.')[0];
     
@@ -23,10 +23,8 @@ export function middleware(req) {
     
     const targetPath = subdomainMap[subdomain];
     
-    if (targetPath) {
+    if (targetPath && pathname !== targetPath) {
       console.log(`🔄 Subdomain detected: ${subdomain}.mornhub.net -> ${targetPath}`);
-      
-      // ALWAYS redirect subdomains to their product pages, regardless of path
       console.log(`🔄 Redirecting ${subdomain}.mornhub.net${pathname} to ${targetPath}`);
       return NextResponse.redirect(new URL(targetPath, req.url));
     }
