@@ -2,5 +2,12 @@
   "buildCommand": "cd apps/main && npm run build",
   "outputDirectory": "apps/main/.next",
   "installCommand": "pnpm install",
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "redirects": [
+    { "source": "/rent", "destination": "https://rent.mornhub.net", "permanent": true },
+    { "source": "/job", "destination": "https://job.mornhub.net", "permanent": true },
+    { "source": "/social", "destination": "https://social.mornhub.net", "permanent": true },
+    { "source": "/deepfake", "destination": "https://deepfake.mornhub.net", "permanent": true },
+    { "source": "/accelerator", "destination": "https://accelerator.mornhub.net", "permanent": true }
+  ]
 } 
