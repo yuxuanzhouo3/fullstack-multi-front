@@ -4,12 +4,22 @@ export function middleware(req) {
   const url = req.nextUrl;
   const hostname = req.headers.get('host') || '';
 
-  // Only handle *.mornhub.net
+  // Handle subdomain routing
   if (hostname.endsWith('.mornhub.net')) {
     const subdomain = hostname.split('.')[0];
-    if (subdomain && subdomain !== 'www' && subdomain !== 'mornhub') {
-      // Rewrite to the sub-app path
-      url.pathname = `/${subdomain}${url.pathname === '/' ? '' : url.pathname}`;
+    
+    // Map subdomains to their product routes
+    const subdomainMap = {
+      'rent': '/rent',
+      'job': '/job', 
+      'social': '/social',
+      'deepfake': '/deepfake',
+      'accelerator': '/accelerator'
+    };
+
+    if (subdomain && subdomainMap[subdomain]) {
+      // Rewrite to the specific product route
+      url.pathname = subdomainMap[subdomain];
       return NextResponse.rewrite(url);
     }
   }
