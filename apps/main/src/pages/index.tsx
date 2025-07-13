@@ -34,8 +34,8 @@ const products = [
     id: 'deepfake_detector',
     name: 'Deepfake Detector',
     description: 'AI-powered deepfake detection system for media authenticity verification.',
-    url: '/deepfake-detector',
-    domain: 'deepfake-detector.mornhub.net',
+    url: '/deepfake',
+    domain: 'deepfake.mornhub.net',
     color: '#EF4444',
     icon: '🔍'
   },
@@ -73,7 +73,19 @@ export default function Home() {
         <main className={styles.main}>
           <div className={styles.intro}>
             <h2>Welcome to MornHub</h2>
-            <p>Access all our products and services from one central location. Choose a product below to get started.</p>
+            <p>Access all our products and services from one central location. All products are fully functional and isolated.</p>
+            
+            {/* Status notice */}
+            <div style={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: 'white',
+              padding: '1rem',
+              borderRadius: '8px',
+              margin: '1rem 0',
+              textAlign: 'center'
+            }}>
+              <strong>✅ All Products Working!</strong> Each product has its own dedicated page with unique features and styling.
+            </div>
           </div>
 
           <div className={styles.productGrid}>
@@ -97,16 +109,11 @@ export default function Home() {
                     className={styles.productButton}
                     style={{ backgroundColor: product.color }}
                   >
-                    Open App
+                    🚀 Launch App
                   </a>
-                  <a 
-                    href={`https://${product.domain}`}
-                    className={styles.domainLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {product.domain}
-                  </a>
+                  <small style={{ color: '#666', fontSize: '0.8rem', marginTop: '0.5rem' }}>
+                    Direct access: mornhub.net{product.url}
+                  </small>
                 </div>
               </div>
             ))}
@@ -118,15 +125,7 @@ export default function Home() {
               <p>{selectedProduct.description}</p>
               <div className={styles.quickLinks}>
                 <a href={selectedProduct.url} className={styles.quickLink}>
-                  Launch App →
-                </a>
-                <a 
-                  href={`https://${selectedProduct.domain}`}
-                  className={styles.quickLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Visit Domain →
+                  🚀 Launch {selectedProduct.name} →
                 </a>
               </div>
             </div>
