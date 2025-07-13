@@ -8,7 +8,7 @@ export function middleware(req) {
   // Debug logging
   console.log('🔍 Middleware called:', { hostname, pathname, url: req.url });
 
-  // Handle subdomain routing - rewrite to serve the correct product page
+  // Handle subdomain routing - redirect to main domain product pages
   if (hostname.includes('.mornhub.net') && hostname !== 'mornhub.net' && hostname !== 'www.mornhub.net') {
     const subdomain = hostname.split('.')[0];
     
@@ -24,16 +24,17 @@ export function middleware(req) {
     const targetPath = subdomainMap[subdomain];
     
     if (targetPath) {
-      // For subdomain root path (/), rewrite to the product page
+      // For subdomain root path (/), redirect to the product page on main domain
       if (pathname === '/') {
-        console.log(`🔄 Subdomain rewrite: ${subdomain}.mornhub.net/ -> ${targetPath}`);
-        const rewriteUrl = new URL(targetPath, req.url);
-        return NextResponse.rewrite(rewriteUrl);
+        console.log(`🔄 Subdomain redirect: ${subdomain}.mornhub.net/ -> mornhub.net${targetPath}`);
+        const redirectUrl = new URL(targetPath, 'https://mornhub.net');
+        return NextResponse.redirect(redirectUrl, 308); // Permanent redirect
       }
       
-      // For other paths on subdomain, let them pass through normally
-      // This allows subdomain routes like rent.mornhub.net/dashboard to work
-      console.log(`✅ Subdomain path: ${subdomain}.mornhub.net${pathname} - passing through`);
+      // For other paths on subdomain, redirect to main domain with same path
+      console.log(`🔄 Subdomain path redirect: ${subdomain}.mornhub.net${pathname} -> mornhub.net${pathname}`);
+      const redirectUrl = new URL(pathname, 'https://mornhub.net');
+      return NextResponse.redirect(redirectUrl, 308); // Permanent redirect
     }
   }
 
