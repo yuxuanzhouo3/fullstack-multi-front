@@ -1,8 +1,6 @@
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 
 export default function AcceleratorRedirect() {
-  const router = useRouter();
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.location.href = "https://accelerator.mornhub.net";
