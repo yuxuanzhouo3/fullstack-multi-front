@@ -3,7 +3,7 @@
   "outputDirectory": "apps/main/.next",
   "installCommand": "pnpm install",
   "framework": "nextjs",
-  "redirects": [
+  "rewrites": [
     {
       "source": "/",
       "destination": "/rent",

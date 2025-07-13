@@ -23,9 +23,18 @@ export function middleware(req) {
     
     const targetPath = subdomainMap[subdomain];
     
-    if (targetPath && pathname === '/') {
-      console.log(`🔄 Redirecting ${subdomain}.mornhub.net to ${targetPath}`);
-      return NextResponse.redirect(new URL(targetPath, req.url));
+    if (targetPath) {
+      console.log(`🔄 Subdomain detected: ${subdomain}.mornhub.net -> ${targetPath}`);
+      
+      // For root path, redirect to the product page
+      if (pathname === '/') {
+        console.log(`🔄 Redirecting ${subdomain}.mornhub.net to ${targetPath}`);
+        return NextResponse.redirect(new URL(targetPath, req.url));
+      }
+      
+      // For any path, rewrite to the product page
+      console.log(`🔄 Rewriting ${subdomain}.mornhub.net${pathname} to ${targetPath}`);
+      return NextResponse.rewrite(new URL(targetPath, req.url));
     }
   }
 
