@@ -3,56 +3,9 @@
   "outputDirectory": "apps/main/.next",
   "installCommand": "pnpm install",
   "framework": "nextjs",
-  "rewrites": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "rent.mornhub.net"
-        }
-      ],
-      "destination": "/rent/:path*"
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "job.mornhub.net"
-        }
-      ],
-      "destination": "/job/:path*"
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "social.mornhub.net"
-        }
-      ],
-      "destination": "/social/:path*"
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "deepfake.mornhub.net"
-        }
-      ],
-      "destination": "/deepfake/:path*"
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "accelerator.mornhub.net"
-        }
-      ],
-      "destination": "/accelerator/:path*"
+  "functions": {
+    "apps/main/src/pages/**/*.tsx": {
+      "maxDuration": 30
     }
-  ]
+  }
 } 
