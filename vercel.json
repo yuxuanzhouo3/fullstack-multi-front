@@ -2,9 +2,5 @@
   "buildCommand": "cd apps/main && npm run build",
   "outputDirectory": "apps/main/.next",
   "installCommand": "pnpm install",
-  "framework": "nextjs",
-  "rewrites": [
-    { "source": "/api/health", "destination": "/api/system/health" },
-    { "source": "/api/:path*", "destination": "/api/:path*" }
-  ]
+  "framework": "nextjs"
 } 
