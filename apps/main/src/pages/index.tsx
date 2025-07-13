@@ -10,7 +10,8 @@ const products = [
     url: '/rent',
     domain: 'rent.mornhub.net',
     color: '#3B82F6',
-    icon: '🏠'
+    icon: '🏠',
+    status: 'working'
   },
   {
     id: 'job',
@@ -19,7 +20,8 @@ const products = [
     url: '/job',
     domain: 'job.mornhub.net',
     color: '#10B981',
-    icon: '💼'
+    icon: '💼',
+    status: 'working'
   },
   {
     id: 'social',
@@ -28,16 +30,18 @@ const products = [
     url: '/social',
     domain: 'social.mornhub.net',
     color: '#8B5CF6',
-    icon: '👥'
+    icon: '👥',
+    status: 'working'
   },
   {
-    id: 'deepfake_detector',
+    id: 'deepfake',
     name: 'Deepfake Detector',
     description: 'AI-powered deepfake detection system for media authenticity verification.',
     url: '/deepfake',
     domain: 'deepfake.mornhub.net',
     color: '#EF4444',
-    icon: '🔍'
+    icon: '🔍',
+    status: 'working'
   },
   {
     id: 'accelerator',
@@ -46,23 +50,25 @@ const products = [
     url: '/accelerator',
     domain: 'accelerator.mornhub.net',
     color: '#F59E0B',
-    icon: '🚀'
+    icon: '🚀',
+    status: 'working'
   }
 ];
 
+type Product = typeof products[0];
+
 export default function Home() {
-  const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   return (
-    <>
+    <div className={styles.container}>
       <Head>
         <title>MornHub - Multi-Product Platform</title>
         <meta name="description" content="Access all MornHub products from one central dashboard" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
-      <div className={styles.container}>
+
+      <div className={styles.main}>
         <header className={styles.header}>
           <div className={styles.headerContent}>
             <h1 className={styles.title}>🌟 MornHub</h1>
@@ -73,18 +79,14 @@ export default function Home() {
         <main className={styles.main}>
           <div className={styles.intro}>
             <h2>Welcome to MornHub</h2>
-            <p>Access all our products and services from one central location. All products are fully functional and isolated.</p>
+            <p>Access all our products and services from one central location. Choose a product below to get started.</p>
             
-            {/* Status notice */}
-            <div style={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              color: 'white',
-              padding: '1rem',
-              borderRadius: '8px',
-              margin: '1rem 0',
-              textAlign: 'center'
-            }}>
-              <strong>✅ All Products Working!</strong> Each product has its own dedicated page with unique features and styling.
+            {/* Status Notice */}
+            <div className={styles.statusNotice}>
+              <h3>✅ All Products Working!</h3>
+              <p><strong>Main Domain Routes:</strong> All products are fully functional via <code>mornhub.net/{'{product}'}</code></p>
+              <p><strong>Subdomain Status:</strong> Currently experiencing Vercel platform routing issues</p>
+              <p><strong>Recommended:</strong> Use the "Open App" buttons below for the best experience</p>
             </div>
           </div>
 
@@ -94,47 +96,69 @@ export default function Home() {
                 key={product.id} 
                 className={styles.productCard}
                 style={{ borderColor: product.color }}
-                onMouseEnter={() => setSelectedProduct(product)}
-                onMouseLeave={() => setSelectedProduct(null)}
+                onClick={() => setSelectedProduct(product)}
               >
-                <div className={styles.productIcon} style={{ backgroundColor: product.color }}>
+                <div 
+                  className={styles.productIcon}
+                  style={{ backgroundColor: product.color }}
+                >
                   {product.icon}
                 </div>
                 <h3 className={styles.productName}>{product.name}</h3>
                 <p className={styles.productDescription}>{product.description}</p>
-                
                 <div className={styles.productLinks}>
                   <a 
                     href={product.url} 
                     className={styles.productButton}
                     style={{ backgroundColor: product.color }}
                   >
-                    🚀 Launch App
+                    ✅ Open App
                   </a>
-                  <small style={{ color: '#666', fontSize: '0.8rem', marginTop: '0.5rem' }}>
-                    Direct access: mornhub.net{product.url}
-                  </small>
+                  <a 
+                    href={`https://${product.domain}`} 
+                    className={styles.domainLink}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ color: product.color }}
+                  >
+                    {product.domain}
+                  </a>
+                </div>
+                <div className={styles.statusBadge}>
+                  <span style={{ backgroundColor: product.status === 'working' ? '#10B981' : '#EF4444' }}>
+                    {product.status === 'working' ? '✅ Working' : '❌ Issue'}
+                  </span>
                 </div>
               </div>
             ))}
           </div>
 
-          {selectedProduct && (
-            <div className={styles.productPreview}>
-              <h3>Quick Access: {selectedProduct.name}</h3>
-              <p>{selectedProduct.description}</p>
-              <div className={styles.quickLinks}>
-                <a href={selectedProduct.url} className={styles.quickLink}>
-                  🚀 Launch {selectedProduct.name} →
-                </a>
-              </div>
+          {/* Quick Access Section */}
+          <div className={styles.quickAccess}>
+            <h3>🚀 Quick Access Links</h3>
+            <div className={styles.quickLinks}>
+              <a href="/rent" className={styles.quickLink} style={{ backgroundColor: '#3B82F6' }}>
+                🏠 MornRent
+              </a>
+              <a href="/job" className={styles.quickLink} style={{ backgroundColor: '#10B981' }}>
+                💼 MornJob
+              </a>
+              <a href="/social" className={styles.quickLink} style={{ backgroundColor: '#8B5CF6' }}>
+                👥 MornSocial
+              </a>
+              <a href="/deepfake" className={styles.quickLink} style={{ backgroundColor: '#EF4444' }}>
+                🔍 Deepfake Detector
+              </a>
+              <a href="/accelerator" className={styles.quickLink} style={{ backgroundColor: '#F59E0B' }}>
+                🚀 Accelerator
+              </a>
             </div>
-          )}
+          </div>
         </main>
 
         <footer className={styles.footer}>
           <div className={styles.footerContent}>
-            <p>&copy; 2024 MornHub. All rights reserved.</p>
+            <p>© 2024 MornHub. All rights reserved.</p>
             <div className={styles.footerLinks}>
               <a href="/api/health" target="_blank" rel="noopener noreferrer">System Status</a>
               <a href="https://github.com/mornhub">GitHub</a>
@@ -143,6 +167,6 @@ export default function Home() {
           </div>
         </footer>
       </div>
-    </>
+    </div>
   );
 }
