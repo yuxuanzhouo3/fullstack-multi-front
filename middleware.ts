@@ -8,7 +8,7 @@ export function middleware(req) {
   // Debug logging
   console.log('🔍 Middleware called:', { hostname, pathname, url: req.url });
 
-  // Handle subdomain routing - only redirect if not already on the correct page
+  // Handle subdomain routing - rewrite to serve the correct product page
   if (hostname.includes('.mornhub.net') && hostname !== 'mornhub.net' && hostname !== 'www.mornhub.net') {
     const subdomain = hostname.split('.')[0];
     
@@ -23,10 +23,17 @@ export function middleware(req) {
     
     const targetPath = subdomainMap[subdomain];
     
-    if (targetPath && pathname !== targetPath) {
-      console.log(`🔄 Subdomain detected: ${subdomain}.mornhub.net -> ${targetPath}`);
-      console.log(`🔄 Redirecting ${subdomain}.mornhub.net${pathname} to ${targetPath}`);
-      return NextResponse.redirect(new URL(targetPath, req.url));
+    if (targetPath) {
+      // For subdomain root path (/), rewrite to the product page
+      if (pathname === '/') {
+        console.log(`🔄 Subdomain rewrite: ${subdomain}.mornhub.net/ -> ${targetPath}`);
+        const rewriteUrl = new URL(targetPath, req.url);
+        return NextResponse.rewrite(rewriteUrl);
+      }
+      
+      // For other paths on subdomain, let them pass through normally
+      // This allows subdomain routes like rent.mornhub.net/dashboard to work
+      console.log(`✅ Subdomain path: ${subdomain}.mornhub.net${pathname} - passing through`);
     }
   }
 
@@ -39,6 +46,9 @@ export function middleware(req) {
     return response;
   }
 
+  // For main domain, let all routes pass through normally
+  // This ensures /rent, /job, etc. serve their own content
+  // and the main dashboard (/) serves its own content
   return NextResponse.next();
 }
 
