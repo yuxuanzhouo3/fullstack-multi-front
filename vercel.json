@@ -3,11 +3,6 @@
   "outputDirectory": "apps/main/.next",
   "installCommand": "pnpm install",
   "framework": "nextjs",
-  "functions": {
-    "apps/main/src/pages/**/*.tsx": {
-      "maxDuration": 30
-    }
-  },
   "rewrites": [
     {
       "source": "/",
